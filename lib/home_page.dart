@@ -24,7 +24,7 @@ class HomePage extends StatelessWidget {
           child: const Align(
             alignment: Alignment.bottomLeft,
             child: Text(
-              'Welcome Back, Shannon.',
+              'Welcome Back.',
               style: TextStyle(
                 fontSize: 43,
                 fontWeight: FontWeight.bold,

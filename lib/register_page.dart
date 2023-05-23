@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:wegojim/auth_page.dart';
 import 'package:wegojim/components/my_button.dart';
 import 'package:wegojim/components/my_textfield.dart';
 
@@ -104,7 +105,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
                 // confirm password textfield
                 MyTextField(
-                  controller: passwordController,
+                  controller: confirmPasswordController,
                   hintText: 'Confirm Password',
                   obscureText: true,
                 ),
@@ -137,19 +138,26 @@ class _RegisterPageState extends State<RegisterPage> {
                 const SizedBox(height: 50),
           
                 // have an account? login now
-                const Row(
+                Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(
+                    const Text(
                       'Have an account? ',
                       style: TextStyle(color: Colors.white),
                     ),
-                    SizedBox(width: 4),
-                    Text(
-                      'Login now.',
-                      style: TextStyle(
-                        color: Colors.red,
-                        fontWeight: FontWeight.bold,
+
+                    const SizedBox(width: 4),
+                    
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context)=>const AuthPage()));
+                      },
+                      child: const Text(
+                        'Login now.',
+                        style: TextStyle(
+                          color: Colors.red,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
                   ],
