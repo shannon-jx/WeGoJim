@@ -4,7 +4,7 @@ import 'package:wegojim/auth_page.dart';
 import 'package:wegojim/home_page.dart';
 
 import 'package:firebase_core/firebase_core.dart';
-import 'firebase_options.dart';
+import 'components/firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -21,7 +21,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(primarySwatch: Colors.red),
+      theme: ThemeData(
+        primarySwatch: Colors.red, // Change the primary color
+        hintColor: Colors.grey[400], // Change the accent color
+      ),
       home: const AuthPage(),
     );
   }
@@ -44,14 +47,21 @@ class _RootPageState extends State<RootPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey.shade900,
+      backgroundColor: Colors.black,
       appBar: AppBar(
         elevation: 0,
-        title: const Text('WeGoJim', style: TextStyle(color: Colors.black)),
+        title: Image.asset(
+          'assets/logo.png',
+          width: 100,
+          height: 1000,
+        ),
         actions: [
           IconButton(
             onPressed: signUserOut,
-            icon: const Icon(Icons.logout, color: Colors.black,),
+            icon: const Icon(
+              Icons.logout,
+              color: Colors.white,
+            ),
           ),
         ],
       ),
@@ -60,15 +70,26 @@ class _RootPageState extends State<RootPage> {
         onPressed: () {
           debugPrint('Floating Action Button');
         },
-        child: const Icon(Icons.messenger_rounded, color: Colors.black,),
+        child: const Icon(
+          Icons.messenger_rounded,
+          color: Colors.black,
+        ),
       ),
       bottomNavigationBar: NavigationBar(
         backgroundColor: Colors.red,
         destinations: const [
-          NavigationDestination(icon: Icon(Icons.home_sharp, size: 30), label: 'Home'),
-          NavigationDestination(icon: Icon(Icons.add_circle, size: 30), label: 'Add'),
           NavigationDestination(
-              icon: Icon(Icons.person_outline_rounded, size: 30), label: 'Profile'),
+            icon: Icon(Icons.home_sharp, size: 30, color: Colors.black),
+            label: 'Home',
+          ),
+          NavigationDestination(
+              icon: Icon(Icons.accessibility_new_sharp,
+                  size: 30, color: Colors.black),
+              label: 'My Workouts'),
+          NavigationDestination(
+              icon: Icon(Icons.person_outline_rounded,
+                  size: 30, color: Colors.black),
+              label: 'Profile'),
         ],
         onDestinationSelected: (int index) {
           setState(() {

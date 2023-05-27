@@ -1,9 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:wegojim/auth_page.dart';
-import 'package:wegojim/components/my_button.dart';
 import 'package:wegojim/components/my_textfield.dart';
-
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -13,27 +11,35 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
-
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final confirmPasswordController = TextEditingController();
 
   void signUserUp() async {
+    String email = emailController.text.trim();
+    String password = passwordController.text.trim();
+    String confirmPassword = confirmPasswordController.text.trim();
+
+    if (email.isEmpty || password.isEmpty || confirmPassword.isEmpty) {
+      showErrorMessage("Please fill in all fields.");
+      return;
+    }
+
     try {
-      if (passwordController.text == confirmPasswordController.text) {
+      if (password == confirmPassword) {
         await FirebaseAuth.instance.createUserWithEmailAndPassword(
-          email: emailController.text,
-          password: passwordController.text,
+          email: email,
+          password: password,
         );
       } else {
-        showErrorMessage("Passwords Don't Match.");
+        showErrorMessage("Passwords don't match.");
       }
     } on FirebaseAuthException catch (e) {
       showErrorMessage(e.code);
     }
   }
 
-    // error message popup
+  // error message popup
   void showErrorMessage(String message) {
     showDialog(
       context: context,
@@ -60,13 +66,13 @@ class _RegisterPageState extends State<RegisterPage> {
           child: SingleChildScrollView(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: [   
+              children: [
                 SizedBox(
                   child: Image.asset('assets/logo.png'),
                 ),
-          
+
                 const SizedBox(height: 50),
-          
+
                 const Padding(
                   padding: EdgeInsets.only(
                     left: 30,
@@ -74,7 +80,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   child: Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
-                      'Register.',
+                      'Join us!',
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 30,
@@ -82,25 +88,42 @@ class _RegisterPageState extends State<RegisterPage> {
                     ),
                   ),
                 ),
-          
+
                 const SizedBox(height: 25),
-          
+
+                // Name textfield
+                MyTextField(
+                  controller: emailController,
+                  hintText: 'First Name',
+                  obscureText: false,
+                ),
+
+                const SizedBox(height: 10),
+
+                MyTextField(
+                  controller: emailController,
+                  hintText: 'Last Name',
+                  obscureText: false,
+                ),
+
+                const SizedBox(height: 10),
+
                 // email textfield
                 MyTextField(
                   controller: emailController,
                   hintText: 'Email',
                   obscureText: false,
                 ),
-          
+
                 const SizedBox(height: 10),
-          
+
                 // password textfield
                 MyTextField(
                   controller: passwordController,
                   hintText: 'Password',
                   obscureText: true,
                 ),
-          
+
                 const SizedBox(height: 10),
 
                 // confirm password textfield
@@ -109,9 +132,9 @@ class _RegisterPageState extends State<RegisterPage> {
                   hintText: 'Confirm Password',
                   obscureText: true,
                 ),
-          
+
                 const SizedBox(height: 20),
-          
+
                 // sign in button
                 GestureDetector(
                   onTap: signUserUp,
@@ -134,23 +157,23 @@ class _RegisterPageState extends State<RegisterPage> {
                     ),
                   ),
                 ),
-          
+
                 const SizedBox(height: 50),
-          
+
                 // have an account? login now
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     const Text(
-                      'Have an account? ',
+                      'Already have an account? ',
                       style: TextStyle(color: Colors.white),
                     ),
-
                     const SizedBox(width: 4),
-                    
                     GestureDetector(
                       onTap: () {
-                        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context)=>const AuthPage()));
+                        Navigator.of(context).pushReplacement(MaterialPageRoute(
+                            builder: (BuildContext context) =>
+                                const AuthPage()));
                       },
                       child: const Text(
                         'Login now.',
