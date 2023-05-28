@@ -19,19 +19,45 @@ class _LoginPageState extends State<LoginPage> {
 
   // sign user in method
   void signUserIn() async {
-    try {
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: emailController.text,
-        password: passwordController.text,
-      );
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'user-not-found') {
-        wrongEmailMessage();
-      } else if (e.code == 'wrong-password') {
-        wrongPasswordMessage();
-      }
+  String email = emailController.text.trim();
+  String password = passwordController.text.trim();
+
+  if (email.isEmpty || password.isEmpty) {
+    showEmptyFieldsMessage("Please fill in all fields.");
+    return;
+  }
+
+  try {
+    await FirebaseAuth.instance.signInWithEmailAndPassword(
+      email: email,
+      password: password,
+    );
+  } on FirebaseAuthException catch (e) {
+    if (e.code == 'user-not-found') {
+      wrongEmailMessage();
+    } else if (e.code == 'wrong-password') {
+      wrongPasswordMessage();
     }
   }
+}
+
+void showEmptyFieldsMessage(String message) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          backgroundColor: Colors.white,
+          title: Center(
+            child: Text(
+              message,
+              style: const TextStyle(color: Colors.black),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
 
   void wrongEmailMessage() {
     showDialog(
@@ -72,103 +98,112 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
-      body: SafeArea(
-        child: Center(
-          child: SingleChildScrollView(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [          
-                SizedBox(
-                  child: Image.asset('assets/logo.png'),
-                ),
-          
-                const SizedBox(height: 80),
-          
-                const Padding(
-                  padding: EdgeInsets.only(
-                    left: 30,
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.center,
+            end: Alignment.bottomCenter,
+            colors: [Colors.black, Colors.red],
+          ),
+        ),
+        child: SafeArea(
+          child: Center(
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [          
+                  SizedBox(
+                    child: Image.asset('assets/logo.png'),
                   ),
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      'Login.',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 30,
-                      ),
+            
+                  const SizedBox(height: 30),
+            
+                  const Padding(
+                    padding: EdgeInsets.only(
+                      left: 30,
                     ),
-                  ),
-                ),
-          
-                const SizedBox(height: 25),
-          
-                // email textfield
-                MyTextField(
-                  controller: emailController,
-                  hintText: 'Email',
-                  obscureText: false,
-                ),
-          
-                const SizedBox(height: 10),
-          
-                // password textfield
-                MyTextField(
-                  controller: passwordController,
-                  hintText: 'Password',
-                  obscureText: true,
-                ),
-          
-                const SizedBox(height: 10),
-          
-                // forgot password?
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 25.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Text(
-                        'Forgot Password?',
-                        style: TextStyle(color: Colors.white),
-                      ),
-                    ],
-                  ),
-                ),
-          
-                const SizedBox(height: 25),
-          
-                // sign in button
-                MyButton(
-                  onTap: signUserIn,
-                ),
-          
-                const SizedBox(height: 50),
-          
-                // not a member? register now
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Text(
-                      'Not a member?',
-                      style: TextStyle(color: Colors.white),
-                    ),
-
-                    const SizedBox(width: 4),
-                    
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context)=>const RegisterPage()));
-                      },
-                      child: const Text(
-                        'Register now.',
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        'Welcome back!',
                         style: TextStyle(
-                          color: Colors.red,
-                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                          fontSize: 20,
                         ),
                       ),
                     ),
-                  ],
-                )
-              ],
+                  ),
+            
+                  const SizedBox(height: 15),
+            
+                  // email textfield
+                  MyTextField(
+                    controller: emailController,
+                    hintText: 'Email',
+                    obscureText: false,
+                  ),
+            
+                  const SizedBox(height: 10),
+            
+                  // password textfield
+                  MyTextField(
+                    controller: passwordController,
+                    hintText: 'Password',
+                    obscureText: true,
+                  ),
+            
+                  const SizedBox(height: 10),
+            
+                  // forgot password?
+                  const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 25.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Text(
+                          'Forgot Password?',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ],
+                    ),
+                  ),
+            
+                  const SizedBox(height: 25),
+            
+                  // sign in button
+                  MyButton(
+                    onTap: signUserIn,
+                  ),
+            
+                  const SizedBox(height: 50),
+            
+                  // not a member? register now
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Text(
+                        'Not a member?',
+                        style: TextStyle(color: Colors.white),
+                      ),
+      
+                      const SizedBox(width: 4),
+                      
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context)=>const RegisterPage()));
+                        },
+                        child: const Text(
+                          'Register now.',
+                          style: TextStyle(
+                            color: Colors.red,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ],
+                  )
+                ],
+              ),
             ),
           ),
         ),
