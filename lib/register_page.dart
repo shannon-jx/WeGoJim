@@ -1,7 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:wegojim/auth_page.dart';
 import 'package:wegojim/components/my_textfield.dart';
+import 'package:wegojim/login_page.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -35,12 +37,25 @@ class _RegisterPageState extends State<RegisterPage> {
           email: email,
           password: password,
         );
+
+        getDetails(firstname, lastname, email);
+
+        // ignore: use_build_context_synchronously
+        Navigator.of(context).push(MaterialPageRoute(builder: (context) => const AuthPage()));
       } else {
         showErrorMessage("Passwords don't match.");
       }
     } on FirebaseAuthException catch (e) {
       showErrorMessage(e.code);
     }
+  }
+
+  Future getDetails(String firstname, String lastname, String email) async {
+    await FirebaseFirestore.instance.collection('users').add({
+      'First Name': firstname,
+      'Last Name': lastname,
+      'Email': email,
+    });
   }
 
   // error message popup
