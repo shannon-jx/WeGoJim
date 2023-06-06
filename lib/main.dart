@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:wegojim/auth_page.dart';
 
 import 'package:firebase_core/firebase_core.dart';
@@ -43,6 +44,7 @@ class _RootPageState extends State<RootPage> {
 
   void signUserOut() {
     FirebaseAuth.instance.signOut();
+    GoogleSignIn().signOut();
   }
 
   @override

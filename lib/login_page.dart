@@ -1,8 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:wegojim/auth_service.dart';
 import 'package:wegojim/components/my_button.dart';
 import 'package:wegojim/components/my_textfield.dart';
+import 'package:wegojim/components/square_tile.dart';
 import 'package:wegojim/register_page.dart';
+
+import 'forgot_pw_page.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -14,7 +18,6 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   // text editing controllers
   final emailController = TextEditingController();
-
   final passwordController = TextEditingController();
 
   // sign user in method
@@ -155,14 +158,26 @@ void showEmptyFieldsMessage(String message) {
                   const SizedBox(height: 10),
             
                   // forgot password?
-                  const Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 25.0),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 25.0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        Text(
-                          'Forgot Password?',
-                          style: TextStyle(color: Colors.white),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context, 
+                              MaterialPageRoute(
+                                builder: (context) {
+                                  return const ForgotPWPage();
+                                },
+                              ),
+                            );
+                          },
+                          child: const Text(
+                            'Forgot Password?',
+                            style: TextStyle(color: Colors.white),
+                          ),
                         ),
                       ],
                     ),
@@ -176,7 +191,14 @@ void showEmptyFieldsMessage(String message) {
                   ),
             
                   const SizedBox(height: 50),
-            
+
+                  GestureDetector(
+                    onTap: () => AuthService().signInwithGoogle(),
+                    child: const SquareTile(
+                      imagePath: 'assets/google.png'
+                    ),
+                  ),
+
                   // not a member? register now
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
