@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:wegojim/auth_page.dart';
 
 import 'package:firebase_core/firebase_core.dart';
@@ -43,28 +44,31 @@ class _RootPageState extends State<RootPage> {
 
   void signUserOut() {
     FirebaseAuth.instance.signOut();
+    GoogleSignIn().signOut();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBody: true,
       appBar: AppBar(
-        elevation: 0,
         title: Image.asset(
           'assets/logo.png',
-          width: 100,
-          height: 1000,
-          color: Colors.black,
+          width: 120,
+          height: 120,
+          color: Colors.red,
         ),
         actions: [
           IconButton(
             onPressed: signUserOut,
             icon: const Icon(
               Icons.logout,
-              color: Colors.white,
+              color: Colors.red,
             ),
           ),
         ],
+        backgroundColor: Colors.black,
+        elevation: 0,
       ),
       body: const HomePage(),
       floatingActionButton: FloatingActionButton(
@@ -77,20 +81,21 @@ class _RootPageState extends State<RootPage> {
         ),
       ),
       bottomNavigationBar: NavigationBar(
-        backgroundColor: Colors.red,
+        backgroundColor: Colors.black,
         destinations: const [
           NavigationDestination(
-            icon: Icon(Icons.home_sharp, size: 30, color: Colors.black),
+            icon: Icon(Icons.home_sharp, size: 30, color: Colors.red),
             label: 'Home',
           ),
           NavigationDestination(
-              icon: Icon(Icons.accessibility_new_sharp,
-                  size: 30, color: Colors.black),
+              icon: Icon(Icons.calendar_today,
+                  size: 30, color: Colors.red),
               label: 'My Workouts'),
           NavigationDestination(
               icon: Icon(Icons.person_outline_rounded,
-                  size: 30, color: Colors.black),
-              label: 'Profile'),
+                  size: 30, color: Colors.red),
+              label: 'Profile',
+              ),
         ],
         onDestinationSelected: (int index) {
           setState(() {
