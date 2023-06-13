@@ -27,7 +27,7 @@ class HomePage extends StatelessWidget {
                   bottomLeft: Radius.circular(30),
                   bottomRight: Radius.circular(30),
                 ),
-                color: Colors.red,
+                color: Colors.transparent,
               ),
               height: 100,
               padding: const EdgeInsets.only(
@@ -47,6 +47,7 @@ class HomePage extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 24),
+            
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: ElevatedButton(
@@ -82,6 +83,7 @@ class HomePage extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 30),
+
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: ElevatedButton(
