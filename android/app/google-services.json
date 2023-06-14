@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "493878455294",
+    "project_id": "wegojim-da9d2",
+    "storage_bucket": "wegojim-da9d2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:493878455294:android:a94b3a87c6537ac9c3aeaf",
+        "android_client_info": {
+          "package_name": "com.example.wegojim"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "493878455294-76q4pgsc2cm9odsne30cacrunrt5e3oh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.wegojim",
+            "certificate_hash": "fbd2d6211163895e6401ce777078d510ec35eb51"
+          }
+        },
+        {
+          "client_id": "493878455294-lcuqcmpp6bdmkqvu4d3kl7jbmocdc393.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAQLcddk4QkSRYeCrv61J90RvLI1a7AyPM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "493878455294-2uftd03bndaviogdosfdn3h57qqig44r.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "493878455294-gevuglaont435uj6r6p614o7o41k47f2.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.wegojim"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

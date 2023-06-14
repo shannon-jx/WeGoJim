@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:wegojim/auth_page.dart';
 import 'package:wegojim/components/my_textfield.dart';
+import 'package:wegojim/login_page.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
