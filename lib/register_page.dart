@@ -85,7 +85,7 @@ class _RegisterPageState extends State<RegisterPage> {
           gradient: LinearGradient(
             begin: Alignment.center,
             end: Alignment.bottomCenter,
-            colors: [Colors.black, Colors.red],
+            colors: [Colors.black, Colors.black],
           ),
         ),
         child: SafeArea(
