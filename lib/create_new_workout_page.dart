@@ -33,8 +33,10 @@ class _CreateNewWorkoutState extends State<CreateNewWorkout> {
 
 
 import 'package:flutter/material.dart';
-import 'package:wegojim/workout%20pages/lowerbody_page.dart';
-import 'package:wegojim/workout%20pages/upperbody_page.dart';
+import 'package:wegojim/components/muscle_tile.dart';
+// ignore: unused_import
+import 'package:wegojim/indiv_muscle_page.dart';
+
 class CreateNewWorkout extends StatefulWidget {
   const CreateNewWorkout({super.key});
 
@@ -43,93 +45,98 @@ class CreateNewWorkout extends StatefulWidget {
 }
 
 class _CreateNewWorkoutState extends State<CreateNewWorkout> {
-  bool isUpperBodySelected = false;
-  bool isLowerBodySelected = false;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: Colors.grey.shade900,
       appBar: AppBar(
-        title: const Text('Muscle Group Page'),
+        title: const Text(''),
       ),
-      body: Center(
+      body: const SingleChildScrollView(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            GestureDetector(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const UpperBodyPage(),
-                  ),
-                );
-              },
-              child: MouseRegion(
-                onEnter: (_) {
-                  setState(() {
-                    isUpperBodySelected = true;
-                  });
-                },
-                onExit: (_) {
-                  setState(() {
-                    isUpperBodySelected = false;
-                  });
-                },
-                child: Container(
-                  width: 200,
-                  height: 300,
-                  color: isUpperBodySelected ? Colors.red : Colors.grey,
-                  child: const Center(
-                    child: Text(
-                      'Upper Body',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                ),
+            SizedBox(height: 50.0),
+      
+            Text(
+              "UPPER BODY",
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 30.0,
+                fontWeight: FontWeight.bold
               ),
             ),
-            const SizedBox(height: 20),
-            GestureDetector(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const LowerBodyPage(),
+      
+            SizedBox(height: 10.0),
+      
+            Padding(
+              padding: EdgeInsets.all(15.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Column(
+                    children: [
+                      MuscleTile(muscle: "Forearms", imageLink: "https://cdn.3d4medical.com/media/blog/forearm-compartments/arm2.jpg",),
+                      SizedBox(height: 20),
+                      MuscleTile(muscle: "Triceps", imageLink: "https://st2.depositphotos.com/1047356/8599/i/950/depositphotos_85998648-stock-photo-triceps-human-anatomy.jpg",),
+                      SizedBox(height: 20),
+                      MuscleTile(muscle: "Traps", imageLink: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSgOSxHnq0tP3CHBVBNa0wWSTuSHY8-CHUo-A&usqp=CAU",),
+                      SizedBox(height: 20),
+                      MuscleTile(muscle: "Middle Back", imageLink: "https://cdn.3d4medical.com/media/blog/forearm-compartments/arm2.jpg",),
+                      SizedBox(height: 20),
+                      MuscleTile(muscle: "Chest", imageLink: "https://cdn.3d4medical.com/media/blog/forearm-compartments/arm2.jpg",),
+                    ],
                   ),
-                );
-              },
-              child: MouseRegion(
-                onEnter: (_) {
-                  setState(() {
-                    isLowerBodySelected = true;
-                  });
-                },
-                onExit: (_) {
-                  setState(() {
-                    isLowerBodySelected = false;
-                  });
-                },
-                child: Container(
-                  width: 200,
-                  height: 300,
-                  color: isLowerBodySelected ? Colors.red : Colors.grey,
-                  child: const Center(
-                    child: Text(
-                      'Lower Body',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
+                  Column(
+                    children: [
+                      MuscleTile(muscle: "Biceps", imageLink: "https://media.istockphoto.com/id/1217690975/photo/biceps-brachii-muscles-isolated-anterior-view-anatomy-on-black-background.jpg?s=1024x1024&w=is&k=20&c=7REkNtzgXnB8LTMUeqANMjhE5as5vEmO7EDEdjvqdQI=",),
+                      SizedBox(height: 20),
+                      MuscleTile(muscle: "Shoulders", imageLink: "https://c8.alamy.com/comp/2A14CF0/labeled-anatomy-chart-of-neck-and-shoulder-muscles-on-black-background-2A14CF0.jpg",),
+                      SizedBox(height: 20),
+                      MuscleTile(muscle: "Lower Back", imageLink: "https://st.focusedcollection.com/13422768/i/650/focused_312138832-stock-photo-female-anatomy-showing-back-muscles.jpg",),
+                      SizedBox(height: 20),
+                      MuscleTile(muscle: "Abdominals", imageLink: "https://cdn.3d4medical.com/media/blog/forearm-compartments/arm2.jpg",),
+                      SizedBox(height: 20),
+                      MuscleTile(muscle: "Neck", imageLink: "https://cdn.3d4medical.com/media/blog/forearm-compartments/arm2.jpg",),
+                    ],
+                  )
+                ],
+              ),
+            ),
+
+            SizedBox(height: 50.0),
+      
+            Text(
+              "LOWER BODY",
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 30.0,
+                fontWeight: FontWeight.bold
+              ),
+            ),
+
+            Padding(
+              padding: EdgeInsets.all(15.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Column(
+                    children: [
+                      MuscleTile(muscle: "Glutes", imageLink: "https://cdn.3d4medical.com/media/blog/forearm-compartments/arm2.jpg",),
+                      SizedBox(height: 20),
+                      MuscleTile(muscle: "Hamstrings", imageLink: "https://cdn.3d4medical.com/media/blog/forearm-compartments/arm2.jpg",),
+                      SizedBox(height: 20),
+                    ],
                   ),
-                ),
+                  Column(
+                    children: [
+                      MuscleTile(muscle: "Quadriceps", imageLink: "https://cdn.3d4medical.com/media/blog/forearm-compartments/arm2.jpg",),
+                      SizedBox(height: 20),
+                      MuscleTile(muscle: "Calves", imageLink: "https://cdn.3d4medical.com/media/blog/forearm-compartments/arm2.jpg",),
+                      SizedBox(height: 20),
+                    ],
+                  )
+                ],
               ),
             ),
           ],
