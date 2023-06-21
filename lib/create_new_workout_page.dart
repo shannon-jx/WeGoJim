@@ -82,8 +82,6 @@ class _CreateNewWorkoutState extends State<CreateNewWorkout> {
                       SizedBox(height: 20),
                       MuscleTile(muscle: "Traps", imageLink: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSgOSxHnq0tP3CHBVBNa0wWSTuSHY8-CHUo-A&usqp=CAU",),
                       SizedBox(height: 20),
-                      MuscleTile(muscle: "Middle Back", imageLink: "https://cdn.3d4medical.com/media/blog/forearm-compartments/arm2.jpg",),
-                      SizedBox(height: 20),
                       MuscleTile(muscle: "Chest", imageLink: "https://cdn.3d4medical.com/media/blog/forearm-compartments/arm2.jpg",),
                     ],
                   ),
@@ -93,11 +91,9 @@ class _CreateNewWorkoutState extends State<CreateNewWorkout> {
                       SizedBox(height: 20),
                       MuscleTile(muscle: "Shoulders", imageLink: "https://c8.alamy.com/comp/2A14CF0/labeled-anatomy-chart-of-neck-and-shoulder-muscles-on-black-background-2A14CF0.jpg",),
                       SizedBox(height: 20),
-                      MuscleTile(muscle: "Lower Back", imageLink: "https://st.focusedcollection.com/13422768/i/650/focused_312138832-stock-photo-female-anatomy-showing-back-muscles.jpg",),
+                      MuscleTile(muscle: "Back", imageLink: "https://st.focusedcollection.com/13422768/i/650/focused_312138832-stock-photo-female-anatomy-showing-back-muscles.jpg",),
                       SizedBox(height: 20),
-                      MuscleTile(muscle: "Abdominals", imageLink: "https://cdn.3d4medical.com/media/blog/forearm-compartments/arm2.jpg",),
-                      SizedBox(height: 20),
-                      MuscleTile(muscle: "Neck", imageLink: "https://cdn.3d4medical.com/media/blog/forearm-compartments/arm2.jpg",),
+                      MuscleTile(muscle: "Abs", imageLink: "https://cdn.3d4medical.com/media/blog/forearm-compartments/arm2.jpg",),
                     ],
                   )
                 ],
@@ -130,7 +126,7 @@ class _CreateNewWorkoutState extends State<CreateNewWorkout> {
                   ),
                   Column(
                     children: [
-                      MuscleTile(muscle: "Quadriceps", imageLink: "https://cdn.3d4medical.com/media/blog/forearm-compartments/arm2.jpg",),
+                      MuscleTile(muscle: "Quads", imageLink: "https://cdn.3d4medical.com/media/blog/forearm-compartments/arm2.jpg",),
                       SizedBox(height: 20),
                       MuscleTile(muscle: "Calves", imageLink: "https://cdn.3d4medical.com/media/blog/forearm-compartments/arm2.jpg",),
                       SizedBox(height: 20),

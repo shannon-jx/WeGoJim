@@ -29,7 +29,7 @@ class WorkoutTile extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          workout.name,
+                          workout.name.toUpperCase(),
                           style: const TextStyle(
                             fontSize: 20.0,
                             fontWeight: FontWeight.bold,
@@ -56,7 +56,7 @@ class WorkoutTile extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(left: 22.0),
                   child: Text(
-                    workout.difficulty,
+                    'EQUIPMENT: ${workout.equipment.toUpperCase()}',
                     style: const TextStyle(
                       color: Colors.grey,
                       fontSize: 22.0,
