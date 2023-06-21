@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>493878455294-gevuglaont435uj6r6p614o7o41k47f2.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.493878455294-gevuglaont435uj6r6p614o7o41k47f2</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>493878455294-76q4pgsc2cm9odsne30cacrunrt5e3oh.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBizXvITOzuza51GHUwYzTMDyQ5Z3UWFnI</string>
+	<key>GCM_SENDER_ID</key>
+	<string>493878455294</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.example.wegojim</string>
+	<key>PROJECT_ID</key>
+	<string>wegojim-da9d2</string>
+	<key>STORAGE_BUCKET</key>
+	<string>wegojim-da9d2.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:493878455294:ios:569bd484c57ab513c3aeaf</string>
+</dict>
+</plist>

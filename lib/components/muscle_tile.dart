@@ -47,6 +47,7 @@ class _MuscleTileState extends State<MuscleTile> {
         child: Container(
           width: 170,
           height: 170,
+
           /*color: isUpperBodySelected ? Colors.red : Colors.grey,*/
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(30.0),
