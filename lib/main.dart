@@ -4,9 +4,10 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:wegojim/auth_page.dart';
 
 import 'package:firebase_core/firebase_core.dart';
+import 'package:wegojim/profile_page.dart';
 import 'firebase_options.dart';
 import 'home_page.dart';
-
+import 'workout_calendar_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -17,7 +18,7 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -33,18 +34,31 @@ class MyApp extends StatelessWidget {
 }
 
 class RootPage extends StatefulWidget {
-  const RootPage({super.key});
+  const RootPage({Key? key}) : super(key: key);
 
   @override
   State<RootPage> createState() => _RootPageState();
 }
 
 class _RootPageState extends State<RootPage> {
-  int currentPage = 0;
+  int currentPageIndex = 0;
+  final List<Widget> pages = [
+    const HomePage(),
+    const WorkoutCalendarPage(),
+    const ProfilePage(),
+
+    // Add more pages here if needed
+  ];
 
   void signUserOut() {
     FirebaseAuth.instance.signOut();
     GoogleSignIn().signOut();
+  }
+
+  void navigateToPage(int index) {
+    setState(() {
+      currentPageIndex = index;
+    });
   }
 
   @override
@@ -70,39 +84,42 @@ class _RootPageState extends State<RootPage> {
         backgroundColor: Colors.black,
         elevation: 0,
       ),
-      body: const HomePage(),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          debugPrint('Floating Action Button');
-        },
-        child: const Icon(
-          Icons.messenger_rounded,
-          color: Colors.black,
-        ),
+      body: IndexedStack(
+        index: currentPageIndex,
+        children: pages,
       ),
-      bottomNavigationBar: NavigationBar(
-        backgroundColor: Colors.black,
-        destinations: const [
-          NavigationDestination(
-            icon: Icon(Icons.home_sharp, size: 30, color: Colors.red),
-            label: 'Home',
-          ),
-          NavigationDestination(
-              icon: Icon(Icons.calendar_today,
-                  size: 30, color: Colors.red),
-              label: 'My Workouts'),
-          NavigationDestination(
-              icon: Icon(Icons.person_outline_rounded,
-                  size: 30, color: Colors.red),
+      bottomNavigationBar: Container(
+        decoration: const BoxDecoration(
+          boxShadow: [
+            BoxShadow(
+              color: Colors.red,
+              blurRadius: 8,
+              spreadRadius: 2,
+              offset: Offset(0, 4),
+            ),
+          ],
+        ),
+        child: BottomNavigationBar(
+          onTap: navigateToPage,
+          backgroundColor: Colors.black,
+          selectedItemColor: Colors.red,
+          unselectedItemColor: Colors.grey,
+          currentIndex: currentPageIndex,
+          items: const [
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home_sharp),
+              label: 'Home',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.calendar_today),
+              label: 'My Workouts',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.person_outline_rounded),
               label: 'Profile',
-              ),
-        ],
-        onDestinationSelected: (int index) {
-          setState(() {
-            currentPage = index;
-          });
-        },
-        selectedIndex: currentPage,
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -5,7 +5,7 @@ class MuscleTile extends StatefulWidget {
   final String muscle;
   final String imageLink;
 
-  MuscleTile({super.key, required this.muscle, required this.imageLink});
+  const MuscleTile({super.key, required this.muscle, required this.imageLink});
 
   @override
   State<MuscleTile> createState() => _MuscleTileState();
@@ -45,8 +45,9 @@ class _MuscleTileState extends State<MuscleTile> {
           });
         },
         child: Container(
-          width: 190,
-          height: 190,
+          width: 170,
+          height: 170,
+
           /*color: isUpperBodySelected ? Colors.red : Colors.grey,*/
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(30.0),

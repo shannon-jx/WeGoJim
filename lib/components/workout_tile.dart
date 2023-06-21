@@ -4,6 +4,7 @@ import 'package:wegojim/components/workout.dart';
 // ignore: must_be_immutable
 class WorkoutTile extends StatelessWidget {
   Workout workout;
+
   WorkoutTile({super.key, required this.workout});
 
   @override
@@ -23,28 +24,28 @@ class WorkoutTile extends StatelessWidget {
               padding: const EdgeInsets.all(22.0),
               child: Row(
                 children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        workout.name,
-                        style: const TextStyle(
-                          fontSize: 25.0,
-                          backgroundColor: Colors.transparent,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black,
-                        ),
-                      ),
-                      SizedBox(
-                        height: 350.0,
-                        width: 350.0,
-                        child: Image(
-                          image: NetworkImage(
-                            workout.image
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          workout.name,
+                          style: const TextStyle(
+                            fontSize: 20.0,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black,
                           ),
+                          softWrap: true,
                         ),
-                      )
-                    ],
+                        SizedBox(
+                          height: 200.0,
+                          width: 200.0,
+                          child: Image(
+                            image: NetworkImage(workout.image),
+                          ),
+                        )
+                      ],
+                    ),
                   ),
                 ],
               ),
@@ -75,43 +76,40 @@ class WorkoutTile extends StatelessWidget {
                     ),
                     child: const Padding(
                       padding: EdgeInsets.all(20.0),
-                      child: Icon(
-                        Icons.add
-                      ),
+                      child: Icon(Icons.add),
                     ),
                   ),
                   onTap: () {
                     showModalBottomSheet(
                       backgroundColor: Colors.transparent,
-                      context: context, 
+                      context: context,
                       builder: (BuildContext context) {
                         return Container(
                           height: 600.0,
                           decoration: BoxDecoration(
-                            borderRadius: BorderRadius.only(
+                            borderRadius: const BorderRadius.only(
                               topLeft: Radius.circular(20.0),
-                              topRight: Radius.circular(20.0)
+                              topRight: Radius.circular(20.0),
                             ),
-                            color: Colors.grey.shade300
+                            color: Colors.grey.shade300,
                           ),
                           child: Container(
-                            child: Column(
+                            child: const Column(
                               children: [
-                                SizedBox(height: 40.0,),
-
+                                SizedBox(height: 40.0),
                                 Text(
                                   'Add this Workout',
                                   style: TextStyle(
                                     color: Colors.black,
                                     fontSize: 30.0,
-                                    fontWeight: FontWeight.bold
+                                    fontWeight: FontWeight.bold,
                                   ),
-                                )
+                                ),
                               ],
                             ),
                           ),
                         );
-                      }
+                      },
                     );
                   },
                 ),
