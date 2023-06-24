@@ -46,7 +46,9 @@ class _IndivMusclePageState extends State<IndivMusclePage> {
           difficulty: (jsonData2.length == 0) ? 'not indicated' : jsonData2[0]['difficulty'],
           equipment: eachW['equipment'],  
           image: eachW['gifUrl'], 
-          instructions: eachW['gifUrl'], 
+          instructions: (jsonData2.length == 0) ? 'not indicated' : jsonData2[0]['instructions'],
+          bodyPart: eachW['bodyPart'],
+          target: eachW['target'] 
         );
         workouts.add(workout);
       }
@@ -72,7 +74,7 @@ class _IndivMusclePageState extends State<IndivMusclePage> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            
+
             Padding(
               padding: const EdgeInsets.only(
                 left: 25.0,

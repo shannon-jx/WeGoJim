@@ -56,6 +56,7 @@ class _CreateNewWorkoutState extends State<CreateNewWorkout> {
       body: const SingleChildScrollView(
         child: Column(
           children: [
+            
             SizedBox(height: 50.0),
       
             Text(

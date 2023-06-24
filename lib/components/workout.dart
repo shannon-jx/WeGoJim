@@ -4,6 +4,8 @@ class Workout {
   final String equipment;
   final String image;
   final String instructions;
+  final String bodyPart;
+  final String target;
 
   Workout({
     required this.name,
@@ -11,5 +13,7 @@ class Workout {
     required this.equipment,
     required this.image,
     required this.instructions,
+    required this.bodyPart,
+    required this.target
   });
 }
