@@ -92,6 +92,7 @@ class _MyBottomSheetState extends State<MyBottomSheet> {
                   Row(
                     children: [
                       const Text('Sets: ', style: TextStyle(fontSize: 20.0)),
+
                       Expanded(
                         child: Column(
                           children: [

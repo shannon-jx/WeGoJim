@@ -20,22 +20,42 @@ class _IndivMusclePageState extends State<IndivMusclePage> {
   final searchController = TextEditingController();
 
   Future getWorkouts() async {
-    var response = await http.get(
-      Uri.https('api.api-ninjas.com','/v1/exercises', {'muscle': widget.title}),
-      headers: {'X-Api-Key': 'gXmuQQlTEDgRdp1ErLWFWA==ypBE15MSBgboTq3I'}
+    final link = (widget.title == 'Chest' || widget.title == 'Back' || widget.title == 'Shoulders') 
+      ? 'https://exercisedb.p.rapidapi.com/exercises/bodyPart/${widget.title.toLowerCase()}'
+      : 'https://exercisedb.p.rapidapi.com/exercises/target/${widget.title.toLowerCase()}';
+    final response = await http.get(
+      Uri.parse(link),
+      headers: {
+        'X-RapidAPI-Key': '60f6a7afb6msh6c3f568740f6e4cp188d55jsn3b283e518391',
+        'X-RapidAPI-Host': 'exercisedb.p.rapidapi.com'
+      }
     );
-    var jsonData = jsonDecode(response.body);
 
-    for (var eachW in jsonData) {
-      final workout = Workout(
-        name: eachW['name'], 
-        difficulty: eachW['difficulty'],  
-        image: 'https://fitnessprogramer.com/wp-content/uploads/2021/02/Barbell-Deadlift.gif', 
-        instructions: eachW['instructions']
-      );
-      workouts.add(workout);
+    if (response.statusCode == 200) {
+      var jsonData = jsonDecode(response.body);
+
+      for (var eachW in jsonData) {
+        var response2 = await http.get(
+          Uri.https('api.api-ninjas.com','/v1/exercises', {'name': eachW['name'].toString().toLowerCase()}),
+          headers: {'X-Api-Key': 'gXmuQQlTEDgRdp1ErLWFWA==ypBE15MSBgboTq3I'}
+        );
+        var jsonData2 = jsonDecode(response2.body) as List;
+
+        final workout = Workout(
+          name: eachW['name'], 
+          difficulty: (jsonData2.length == 0) ? 'not indicated' : jsonData2[0]['difficulty'],
+          equipment: eachW['equipment'],  
+          image: eachW['gifUrl'], 
+          instructions: (jsonData2.length == 0) ? 'not indicated' : jsonData2[0]['instructions'],
+          bodyPart: eachW['bodyPart'],
+          target: eachW['target'] 
+        );
+        workouts.add(workout);
+      }
+      print(workouts.length);
+    } else {
+      print('Failed');
     }
-    print(workouts.length);
   }
 
   @override
@@ -54,7 +74,7 @@ class _IndivMusclePageState extends State<IndivMusclePage> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            
+
             Padding(
               padding: const EdgeInsets.only(
                 left: 25.0,

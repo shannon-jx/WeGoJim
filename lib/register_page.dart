@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:wegojim/auth_page.dart';
+import 'package:wegojim/components/my_button.dart';
 import 'package:wegojim/components/my_textfield.dart';
 //import 'package:wegojim/login_page.dart';
 
@@ -51,10 +52,11 @@ class _RegisterPageState extends State<RegisterPage> {
   }
 
   Future getDetails(String firstname, String lastname, String email) async {
-    await FirebaseFirestore.instance.collection('users').add({
-      'First Name': firstname,
-      'Last Name': lastname,
+    await FirebaseFirestore.instance.collection('users').doc(email).set({
+      'Name': '$firstname $lastname',
       'Email': email,
+      'Height': '-',
+      'Weight': '-'
     });
   }
 
@@ -162,27 +164,9 @@ class _RegisterPageState extends State<RegisterPage> {
       
                   const SizedBox(height: 20),
       
-                  // sign in button
-                  GestureDetector(
+                  MyButton(
                     onTap: signUserUp,
-                    child: Container(
-                      padding: const EdgeInsets.all(25),
-                      margin: const EdgeInsets.symmetric(horizontal: 25),
-                      decoration: BoxDecoration(
-                        color: Colors.red,
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: const Center(
-                        child: Text(
-                          "Sign Up",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16,
-                          ),
-                        ),
-                      ),
-                    ),
+                    desc: 'Sign Up',
                   ),
       
                   const SizedBox(height: 50),
