@@ -46,8 +46,6 @@ class _RootPageState extends State<RootPage> {
     const HomePage(),
     const WorkoutCalendarPage(),
     const ProfilePage(),
-
-    // Add more pages here if needed
   ];
 
   void signUserOut() {

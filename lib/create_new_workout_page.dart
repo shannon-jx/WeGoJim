@@ -1,37 +1,3 @@
-/* import 'package:flutter/material.dart';
-
-class CreateNewWorkout extends StatefulWidget {
-  const CreateNewWorkout({super.key});
-
-  @override
-  State<CreateNewWorkout> createState() => _CreateNewWorkoutState();
-}
-
-class _CreateNewWorkoutState extends State<CreateNewWorkout> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.grey.shade800,
-      appBar: AppBar(
-        title: const Text('Create New Workout', style: TextStyle(color: Colors.white),),
-        automaticallyImplyLeading: false,
-        leading: IconButton(
-          onPressed: () {
-            Navigator.of(context).pop();
-          }, 
-          icon: const Icon(Icons.arrow_back_ios_new_rounded, color: Colors.white,)
-        ),
-      ),
-      body: Column(
-        children: [
-          Image.network('https://wallpapers.com/images/hd/attractive-man-weight-lifting-7i9jt93nxllz9aet.jpg')
-        ],
-      ),
-    );
-  }
-} */
-
-
 import 'package:flutter/material.dart';
 import 'package:wegojim/components/muscle_tile.dart';
 // ignore: unused_import
@@ -77,24 +43,25 @@ class _CreateNewWorkoutState extends State<CreateNewWorkout> {
                 children: [
                   Column(
                     children: [
-                      MuscleTile(muscle: "Forearms", imageLink: "https://cdn.3d4medical.com/media/blog/forearm-compartments/arm2.jpg",),
+                      MuscleTile(muscle: "Forearms", imageLink: "https://st.depositphotos.com/1909187/2819/i/950/depositphotos_28192895-stock-photo-forearms-anatomy-muscles.jpg",),
                       SizedBox(height: 20),
-                      MuscleTile(muscle: "Triceps", imageLink: "https://st2.depositphotos.com/1047356/8599/i/950/depositphotos_85998648-stock-photo-triceps-human-anatomy.jpg",),
+                      MuscleTile(muscle: "Triceps", imageLink: "https://st.depositphotos.com/1909187/2819/i/950/depositphotos_28192885-stock-photo-triceps-anatomy-muscles.jpg",),
                       SizedBox(height: 20),
-                      MuscleTile(muscle: "Traps", imageLink: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSgOSxHnq0tP3CHBVBNa0wWSTuSHY8-CHUo-A&usqp=CAU",),
+                      MuscleTile(muscle: "Traps", imageLink: "https://st.depositphotos.com/1909187/2819/i/950/depositphotos_28192949-stock-photo-trapezius-anatomy-muscles.jpg",),
                       SizedBox(height: 20),
-                      MuscleTile(muscle: "Chest", imageLink: "https://cdn.3d4medical.com/media/blog/forearm-compartments/arm2.jpg",),
+                      MuscleTile(muscle: "Chest", imageLink: "https://st.depositphotos.com/1909187/2819/i/950/depositphotos_28192943-stock-photo-chest-pectoralis-major-pectoralis-minor.jpg",),
+
                     ],
                   ),
                   Column(
                     children: [
-                      MuscleTile(muscle: "Biceps", imageLink: "https://media.istockphoto.com/id/1217690975/photo/biceps-brachii-muscles-isolated-anterior-view-anatomy-on-black-background.jpg?s=1024x1024&w=is&k=20&c=7REkNtzgXnB8LTMUeqANMjhE5as5vEmO7EDEdjvqdQI=",),
+                      MuscleTile(muscle: "Biceps", imageLink: "https://st.depositphotos.com/1909187/2819/i/950/depositphotos_28192899-stock-photo-biceps-anatomy-muscles.jpg",),
                       SizedBox(height: 20),
-                      MuscleTile(muscle: "Shoulders", imageLink: "https://c8.alamy.com/comp/2A14CF0/labeled-anatomy-chart-of-neck-and-shoulder-muscles-on-black-background-2A14CF0.jpg",),
+                      MuscleTile(muscle: "Shoulders", imageLink: "https://st.depositphotos.com/1909187/2819/i/950/depositphotos_28192973-stock-photo-shoulders-anatomy-muscles.jpg",),
                       SizedBox(height: 20),
-                      MuscleTile(muscle: "Back", imageLink: "https://st.focusedcollection.com/13422768/i/650/focused_312138832-stock-photo-female-anatomy-showing-back-muscles.jpg",),
+                      MuscleTile(muscle: "Back", imageLink: "https://st.depositphotos.com/1909187/2819/i/950/depositphotos_28193021-stock-photo-latissimus-dorsi-anatomy-muscles.jpg",),
                       SizedBox(height: 20),
-                      MuscleTile(muscle: "Abs", imageLink: "https://cdn.3d4medical.com/media/blog/forearm-compartments/arm2.jpg",),
+                      MuscleTile(muscle: "Abs", imageLink: "https://st.depositphotos.com/1909187/2819/i/950/depositphotos_28192889-stock-photo-abs-anatomy-muscles.jpg",),
                     ],
                   )
                 ],
@@ -119,17 +86,17 @@ class _CreateNewWorkoutState extends State<CreateNewWorkout> {
                 children: [
                   Column(
                     children: [
-                      MuscleTile(muscle: "Glutes", imageLink: "https://cdn.3d4medical.com/media/blog/forearm-compartments/arm2.jpg",),
+                      MuscleTile(muscle: "Glutes", imageLink: "https://st.depositphotos.com/1909187/2819/i/950/depositphotos_28192997-stock-photo-glutes-gluteus-maximus-anatomy-muscles.jpg",),
                       SizedBox(height: 20),
-                      MuscleTile(muscle: "Hamstrings", imageLink: "https://cdn.3d4medical.com/media/blog/forearm-compartments/arm2.jpg",),
+                      MuscleTile(muscle: "Hamstrings", imageLink: "https://st.depositphotos.com/1909187/2819/i/950/depositphotos_28193019-stock-photo-hamstrings-anatomy-muscles.jpg",),
                       SizedBox(height: 20),
                     ],
                   ),
                   Column(
                     children: [
-                      MuscleTile(muscle: "Quads", imageLink: "https://cdn.3d4medical.com/media/blog/forearm-compartments/arm2.jpg",),
+                      MuscleTile(muscle: "Quads", imageLink: "https://st.depositphotos.com/1265046/1492/i/950/depositphotos_14927583-stock-photo-sporstman-stressed-leg-muscle-quadriceps.jpg",),
                       SizedBox(height: 20),
-                      MuscleTile(muscle: "Calves", imageLink: "https://cdn.3d4medical.com/media/blog/forearm-compartments/arm2.jpg",),
+                      MuscleTile(muscle: "Calves", imageLink: "https://st.depositphotos.com/1909187/2819/i/950/depositphotos_28193027-stock-photo-calves-anatomy-muscles.jpg",),
                       SizedBox(height: 20),
                     ],
                   )

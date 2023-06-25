@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:wegojim/create_new_workout_page.dart';
 import 'package:wegojim/todays_workout_page.dart';
-
-// ignore: unused_import
-import 'workout_calendar_page.dart';
+import 'package:wegojim/workout_sets_page.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -119,6 +117,41 @@ class HomePage extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 30),
+
+             Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (BuildContext context) {
+                        return const WorkoutSetsPage();
+                      },
+                    ),
+                  );
+                },
+                style: ElevatedButton.styleFrom(
+                  padding: const EdgeInsets.all(40), backgroundColor: Colors.grey[800],
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+                child: const Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(Icons.play_arrow, color: Colors.white),
+                    SizedBox(width: 8),
+                    Text(
+                      "Recommended",
+                      style: TextStyle(
+                        fontSize: 20,
+                        color: Colors.white),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+
             
           ],
         ),
