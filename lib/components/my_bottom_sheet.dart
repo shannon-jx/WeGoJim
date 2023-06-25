@@ -3,13 +3,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:wegojim/components/date_converter.dart';
 import 'package:wegojim/components/my_button.dart';
-import 'package:wegojim/components/my_textfield.dart';
 import 'package:wegojim/components/workout.dart';
 
 class MyBottomSheet extends StatefulWidget {
   final Workout workout;
 
-  MyBottomSheet({super.key, required this.workout});
+  const MyBottomSheet({super.key, required this.workout});
 
   @override
   State<MyBottomSheet> createState() => _MyBottomSheetState();
@@ -25,7 +24,7 @@ class _MyBottomSheetState extends State<MyBottomSheet> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 600.0,
+      height: 800.0,
       decoration: BoxDecoration(
         borderRadius: const BorderRadius.only(
           topLeft: Radius.circular(20.0),
@@ -35,9 +34,9 @@ class _MyBottomSheetState extends State<MyBottomSheet> {
       ),
       child: Column(
         children: [
-          SizedBox(height: 40.0),
+          const SizedBox(height: 40.0),
 
-          Text(
+          const Text(
             'Add this Workout',
             style: TextStyle(
               color: Colors.black,
@@ -46,7 +45,7 @@ class _MyBottomSheetState extends State<MyBottomSheet> {
             ),
           ),
 
-          SizedBox(height: 15.0,),
+          const SizedBox(height: 15.0,),
 
           Container(
             child: Padding(
@@ -57,7 +56,7 @@ class _MyBottomSheetState extends State<MyBottomSheet> {
                     alignment: Alignment.centerLeft,
                     child: Text(
                       'Name: ${widget.workout.name.toUpperCase()}',
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: Colors.black,
                         fontSize: 20.0,
                       ),
@@ -66,7 +65,7 @@ class _MyBottomSheetState extends State<MyBottomSheet> {
 
                   Row(
                     children: [
-                      Text('Date: ', style: TextStyle(fontSize: 20.0)),
+                      const Text('Date: ', style: TextStyle(fontSize: 20.0)),
                       TextButton(
                         onPressed: () {
                           showDatePicker(
@@ -82,22 +81,23 @@ class _MyBottomSheetState extends State<MyBottomSheet> {
                         },
                         child: Text(
                           '${_setDate.day}/${_setDate.month}/${_setDate.year}',
-                          style: TextStyle(fontSize: 20.0),
+                          style: const TextStyle(fontSize: 20.0),
                         ),
                       )
                     ],
                   ),
 
-                  SizedBox(height: 15.0,),
+                  const SizedBox(height: 15.0,),
 
                   Row(
                     children: [
-                      Text('Sets: ', style: TextStyle(fontSize: 20.0)),
+                      const Text('Sets: ', style: TextStyle(fontSize: 20.0)),
+
                       Expanded(
                         child: Column(
                           children: [
                             Text(_sliderValue.toInt().toString(),
-                                style: TextStyle(
+                                style: const TextStyle(
                                     fontSize: 20.0, fontWeight: FontWeight.bold)),
                             Slider(
                                 value: _sliderValue,
@@ -115,9 +115,9 @@ class _MyBottomSheetState extends State<MyBottomSheet> {
                     ],
                   ),
 
-                  SizedBox(height: 15.0,),
+                  const SizedBox(height: 15.0,),
 
-                  Align(
+                  const Align(
                       alignment: Alignment.centerLeft,
                       child:
                           Text('Repetitions: ', style: TextStyle(fontSize: 20.0))),
@@ -135,7 +135,7 @@ class _MyBottomSheetState extends State<MyBottomSheet> {
                             itemExtent: 50,
                             perspective: 0.005,
                             diameterRatio: 1.5,
-                            physics: FixedExtentScrollPhysics(),
+                            physics: const FixedExtentScrollPhysics(),
                             onSelectedItemChanged: (newIndex) {
                               setState(() {
                                 selectedIndex = newIndex;
@@ -146,7 +146,7 @@ class _MyBottomSheetState extends State<MyBottomSheet> {
                               (index) => RotatedBox(
                                 quarterTurns: 1,
                                 child: AnimatedContainer(
-                                    duration: Duration(milliseconds: 400),
+                                    duration: const Duration(milliseconds: 400),
                                     width: index == selectedIndex ? 60 : 50,
                                     height: index == selectedIndex ? 60 : 50,
                                     alignment: Alignment.center,
@@ -158,7 +158,7 @@ class _MyBottomSheetState extends State<MyBottomSheet> {
                                     ),
                                     child: Text(
                                       '$index',
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                           fontSize: 20.0,
                                           fontWeight: FontWeight.bold),
                                     )),

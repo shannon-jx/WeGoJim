@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:wegojim/detailed_workout.dart';
 import 'package:wegojim/components/my_bottom_sheet.dart';
-import 'package:wegojim/components/my_textfield.dart';
 import 'package:wegojim/components/workout.dart';
 
 // ignore: must_be_immutable
@@ -21,9 +20,10 @@ class _WorkoutTileState extends State<WorkoutTile> {
     return GestureDetector(
       onTap: () {
         Navigator.push(
-          context, 
-          MaterialPageRoute(builder: (context) => DetailedWorkout(workout: widget.workout))
-        );
+            context,
+            MaterialPageRoute(
+                builder: (context) =>
+                    DetailedWorkout(workout: widget.workout)));
       },
       child: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -69,14 +69,17 @@ class _WorkoutTileState extends State<WorkoutTile> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.only(left: 22.0),
-                    child: Text(
-                      'EQUIPMENT: ${widget.workout.equipment.toUpperCase()}',
-                      style: const TextStyle(
-                        color: Colors.grey,
-                        fontSize: 22.0,
-                        backgroundColor: Colors.transparent,
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 22.0),
+                      child: Text(
+                        'EQUIPMENT: ${widget.workout.equipment.toUpperCase()}',
+                        style: const TextStyle(
+                          color: Colors.grey,
+                          fontSize: 22.0,
+                          backgroundColor: Colors.transparent,
+                        ),
+                        softWrap: true,
                       ),
                     ),
                   ),
