@@ -1,3 +1,5 @@
+// ignore_for_file: unused_import
+
 import 'package:flutter/material.dart';
 import 'package:wegojim/components/my_bottom_sheet.dart';
 import 'package:wegojim/components/my_button.dart';
@@ -17,6 +19,7 @@ class _SavedDetailedWorkoutState extends State<SavedDetailedWorkout> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         title: Text(widget.workout.name.toUpperCase()),
       ),
@@ -26,10 +29,9 @@ class _SavedDetailedWorkoutState extends State<SavedDetailedWorkout> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Image(
-                image: NetworkImage(
-                  widget.workout.image
-                )
+               Icon(
+                Icons.fitness_center,
+                size: 40,
               ),
       
               SizedBox(height: 15.0,),
@@ -57,7 +59,7 @@ class _SavedDetailedWorkoutState extends State<SavedDetailedWorkout> {
                   onTap: () {
                     Navigator.pop(context);
                   },
-                  desc: 'BACK TO CALENDAR'
+                  desc: 'BACK'
               )
             ],
           ),

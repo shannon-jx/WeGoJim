@@ -6,7 +6,7 @@ import 'package:wegojim/components/workout.dart';
 class DetailedWorkout extends StatefulWidget {
   final Workout workout;
 
-  DetailedWorkout({super.key, required this.workout});
+  const DetailedWorkout({super.key, required this.workout});
 
   @override
   State<DetailedWorkout> createState() => _DetailedWorkoutState();
@@ -31,26 +31,26 @@ class _DetailedWorkoutState extends State<DetailedWorkout> {
                 )
               ),
       
-              SizedBox(height: 15.0,),
+              const SizedBox(height: 15.0,),
         
               Text(
                 widget.workout.name.toUpperCase(),
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 25.0,
                   fontWeight: FontWeight.bold
                 ),
               ), 
       
-              SizedBox(height: 15.0,),
+              const SizedBox(height: 15.0,),
         
               Text(
                 'Difficulty: ${widget.workout.difficulty.toUpperCase()}\nEquipment: ${widget.workout.equipment.toUpperCase()}\nBody Part: ${widget.workout.bodyPart.toUpperCase()}\nTarget: ${widget.workout.target.toUpperCase()}\nInstructions: \n${widget.workout.instructions.toUpperCase()}',
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 18.0,
                 ),
               ), 
       
-              SizedBox(height: 20.0,),
+              const SizedBox(height: 20.0,),
       
               MyButton(
                   onTap: () {

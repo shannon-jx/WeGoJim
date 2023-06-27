@@ -1,12 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-// ignore: unused_import
-import 'package:intl/date_symbols.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:wegojim/components/date_converter.dart';
 import 'package:wegojim/components/edit_workout_dialog.dart';
-import 'package:wegojim/components/my_textfield.dart';
 import 'package:wegojim/components/saved_workout.dart';
 import 'package:wegojim/saved_detailed_workout.dart';
 
@@ -60,11 +57,11 @@ class _WorkoutCalendarPageState extends State<WorkoutCalendarPage> {
               calendarStyle: const CalendarStyle(
                 selectedDecoration: BoxDecoration(
                   color: Color.fromARGB(
-                      255, 234, 122, 114), // Change the color for selected day
+                      255, 234, 122, 114), 
                   shape: BoxShape.circle,
                 ),
                 todayDecoration: BoxDecoration(
-                  color: Colors.red, // Change the color for today
+                  color: Colors.red,
                   shape: BoxShape.circle,
                 ),
                 selectedTextStyle: TextStyle(
@@ -88,13 +85,13 @@ class _WorkoutCalendarPageState extends State<WorkoutCalendarPage> {
               )),
         ),
 
-        SizedBox(
+        const SizedBox(
           height: 20.0,
         ),
 
         Text(
           'Planned Workouts for ${today.day}/${today.month}/${today.year}:',
-          style: TextStyle(color: Colors.white, fontSize: 20.0),
+          style: const TextStyle(color: Colors.white, fontSize: 20.0),
         ),
 
         Expanded(
@@ -109,7 +106,7 @@ class _WorkoutCalendarPageState extends State<WorkoutCalendarPage> {
                     children: listWorkouts.map(eachWorkout).toList(),
                   );
                 } else {
-                  return Center(child: CircularProgressIndicator());
+                  return const Center(child: CircularProgressIndicator());
                 }
               }),
         ),
@@ -134,10 +131,10 @@ class _WorkoutCalendarPageState extends State<WorkoutCalendarPage> {
         );
       },
       child: ListTile(
-        contentPadding: EdgeInsets.all(8.0),
+        contentPadding: const EdgeInsets.all(8.0),
         title: Text(
           sWorkout.name.toUpperCase(), 
-          style: TextStyle(
+          style: const TextStyle(
             color: Colors.white,
             fontSize: 18.0
           )),
@@ -146,13 +143,13 @@ class _WorkoutCalendarPageState extends State<WorkoutCalendarPage> {
           children: [
             Text(
               'Sets: ${sWorkout.sets}', 
-              style: TextStyle(
+              style: const TextStyle(
                 color: Colors.white,
                 fontSize: 16.0
               ),),
             Text(
               'Repetitions: ${sWorkout.repetitions}', 
-              style: TextStyle(
+              style: const TextStyle(
                 color: Colors.white,
                 fontSize: 16.0
               ),),
@@ -169,7 +166,7 @@ class _WorkoutCalendarPageState extends State<WorkoutCalendarPage> {
                 IconButton(
                   color: Colors.white,
                   iconSize: 30,
-                  icon: Icon(Icons.edit),
+                  icon: const Icon(Icons.edit),
                   onPressed: () {
                     editWorkout(sWorkout);
                   },
@@ -177,7 +174,7 @@ class _WorkoutCalendarPageState extends State<WorkoutCalendarPage> {
                 IconButton(
                   color: Colors.red,
                   iconSize: 30,
-                  icon: Icon(Icons.delete),
+                  icon: const Icon(Icons.delete),
                   onPressed: () {
                     final docWorkout = FirebaseFirestore.instance.collection(useremail!).doc(sWorkout.id);
                     docWorkout.delete();

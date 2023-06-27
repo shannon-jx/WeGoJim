@@ -1,3 +1,5 @@
+// ignore_for_file: sized_box_for_whitespace
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -5,6 +7,7 @@ import 'package:wegojim/components/date_converter.dart';
 import 'package:wegojim/components/my_button.dart';
 import 'package:wegojim/components/saved_workout.dart';
 
+// ignore: must_be_immutable
 class EditWorkoutDialog extends StatefulWidget {
   final SavedWorkout sWorkout;
   DateTime setDate;
@@ -48,7 +51,7 @@ class _EditWorkoutDialogState extends State<EditWorkoutDialog> {
       title: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(
+          const Text(
             'Edit Workout',
             style: TextStyle(
               fontWeight: FontWeight.bold,
@@ -56,7 +59,7 @@ class _EditWorkoutDialogState extends State<EditWorkoutDialog> {
             ),
           ),
           IconButton(
-            icon: Icon(Icons.cancel, size: 25.0,),
+            icon: const Icon(Icons.cancel, size: 25.0,),
             onPressed: () {
               Navigator.pop(context);
             },
@@ -70,7 +73,7 @@ class _EditWorkoutDialogState extends State<EditWorkoutDialog> {
             TextField(
               controller: widget.nameController,
               style: const TextStyle(color: Colors.black),
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: 'Name',
                 labelStyle: TextStyle(color: Colors.black),
                 enabledBorder: OutlineInputBorder(
@@ -81,7 +84,7 @@ class _EditWorkoutDialogState extends State<EditWorkoutDialog> {
             
             Row(
               children: [
-                Text('Date: ', style: TextStyle(fontSize: 20.0)),
+                const Text('Date: ', style: TextStyle(fontSize: 20.0)),
                 TextButton(
                   onPressed: () {
                     showDatePicker(
@@ -97,7 +100,7 @@ class _EditWorkoutDialogState extends State<EditWorkoutDialog> {
                   },
                   child: Text(
                     '${widget.setDate.day}/${widget.setDate.month}/${widget.setDate.year}',
-                    style: TextStyle(fontSize: 20.0),
+                    style: const TextStyle(fontSize: 20.0),
                   ),
                 )
               ],
@@ -105,12 +108,12 @@ class _EditWorkoutDialogState extends State<EditWorkoutDialog> {
             
             Row(
               children: [
-                Text('Sets: ', style: TextStyle(fontSize: 20.0)),
+                const Text('Sets: ', style: TextStyle(fontSize: 20.0)),
                 Expanded(
                   child: Column(
                     children: [
                       Text(widget.sliderValue.toInt().toString(),
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontSize: 20.0, fontWeight: FontWeight.bold)),
                       Slider(
                           value: widget.sliderValue,
@@ -127,10 +130,10 @@ class _EditWorkoutDialogState extends State<EditWorkoutDialog> {
                 ),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 15.0,
             ),
-            Align(
+            const Align(
                 alignment: Alignment.centerLeft,
                 child: Text('Repetitions: ', style: TextStyle(fontSize: 20.0))),
             Container(
@@ -144,7 +147,7 @@ class _EditWorkoutDialogState extends State<EditWorkoutDialog> {
                     itemExtent: 50,
                     perspective: 0.005,
                     diameterRatio: 1.8,
-                    physics: FixedExtentScrollPhysics(),
+                    physics: const FixedExtentScrollPhysics(),
                     onSelectedItemChanged: (newIndex) {
                       setState(() {
                         widget.selectedIndex = newIndex;
@@ -155,7 +158,7 @@ class _EditWorkoutDialogState extends State<EditWorkoutDialog> {
                       (index) => RotatedBox(
                         quarterTurns: 1,
                         child: AnimatedContainer(
-                            duration: Duration(milliseconds: 400),
+                            duration: const Duration(milliseconds: 400),
                             width: index == widget.selectedIndex ? 60 : 50,
                             height: index == widget.selectedIndex ? 60 : 50,
                             alignment: Alignment.center,
@@ -167,7 +170,7 @@ class _EditWorkoutDialogState extends State<EditWorkoutDialog> {
                             ),
                             child: Text(
                               '$index',
-                              style: TextStyle(
+                              style: const TextStyle(
                                   fontSize: 20.0, fontWeight: FontWeight.bold),
                             )),
                       ),

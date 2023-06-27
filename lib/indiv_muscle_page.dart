@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -8,7 +10,7 @@ import 'package:http/http.dart' as http;
 class IndivMusclePage extends StatefulWidget {
   final String title;
 
-  IndivMusclePage({super.key, required this.title});
+  const IndivMusclePage({super.key, required this.title});
 
   @override
   State<IndivMusclePage> createState() => _IndivMusclePageState();
@@ -126,7 +128,7 @@ class _IndivMusclePageState extends State<IndivMusclePage> {
                   );
                 }
                 else {
-                  return Center(
+                  return const Center(
                     child: CircularProgressIndicator(),
                   );
                 }
