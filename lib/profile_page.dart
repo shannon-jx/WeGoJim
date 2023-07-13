@@ -48,7 +48,6 @@ class _ProfilePageState extends State<ProfilePage> {
   final fileName = 'profile_image.jpg';
   final localPath = '${appDir.path}/$fileName';
   await image?.copy(localPath);
-  // Now the image file is saved locally at 'localPath'
 }
 
   Future<File?> _cropImage({required File imageFile}) async {
