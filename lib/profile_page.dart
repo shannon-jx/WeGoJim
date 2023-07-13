@@ -1,12 +1,22 @@
 // ignore_for_file: no_leading_underscores_for_local_identifiers
 
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:wegojim/forgot_pw_page.dart';
+import 'package:flutter/services.dart';
+import 'package:image_cropper/image_cropper.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:wegojim/reset_pw_page.dart';
+
+import 'components/select_pfp_sheet.dart';
+import 'edit_profile_page.dart';
+import 'package:path_provider/path_provider.dart';
+
 
 class ProfilePage extends StatefulWidget {
-  const ProfilePage({super.key});
+  const ProfilePage({Key? key}) : super(key: key);
 
   @override
   State<ProfilePage> createState() => _ProfilePageState();
@@ -14,214 +24,214 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
   final useremail = FirebaseAuth.instance.currentUser?.email;
+  File? _image;
 
-  bool _isEditing = false;
+  Future _pickImage(ImageSource source) async {
+    try {
+      final image = await ImagePicker().pickImage(source: source);
+      if (image == null) return;
+      File? img = File(image.path);
+      img = await _cropImage(imageFile: img);
+      setState(() {
+        _image = img;
+        _saveImageLocally(img);
+        Navigator.of(context).pop();
+      });
+    } on PlatformException catch (e) {
+      print(e);
+      Navigator.of(context).pop();
+    }
+  }
 
-  /*@override
-  void dispose() {
-    _nameController.dispose();
-    _emailController.dispose();
-    _heightController.dispose();
-    _weightController.dispose();
-    super.dispose();
-  }*/
+  Future<void> _saveImageLocally(File? image) async {
+  final appDir = await getApplicationDocumentsDirectory();
+  final fileName = 'profile_image.jpg';
+  final localPath = '${appDir.path}/$fileName';
+  await image?.copy(localPath);
+  // Now the image file is saved locally at 'localPath'
+}
+
+  Future<File?> _cropImage({required File imageFile}) async {
+    CroppedFile? croppedImage =
+        await ImageCropper().cropImage(sourcePath: imageFile.path);
+    if (croppedImage == null) return null;
+    return File(croppedImage.path);
+  }
+
+  void _showSelectPhotoOptions(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(
+          top: Radius.circular(25.0),
+        ),
+      ),
+      builder: (context) => DraggableScrollableSheet(
+          initialChildSize: 0.28,
+          maxChildSize: 0.4,
+          minChildSize: 0.28,
+          expand: false,
+          builder: (context, scrollController) {
+            return SingleChildScrollView(
+              controller: scrollController,
+              child: SelectPfpSheet(
+                onTap: _pickImage,
+              ),
+            );
+          }),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.black,
+      appBar: AppBar(
         backgroundColor: Colors.black,
-        appBar: AppBar(
-          backgroundColor: Colors.black,
-          iconTheme: const IconThemeData(color: Colors.red),
-          title: const Text(
-            'Profile',
-            style: TextStyle(color: Colors.white),
-          ),
-          actions: [
-            IconButton(
-              onPressed: () {
-                setState(() {
-                  _isEditing = !_isEditing;
-                });
-              },
-              icon: Icon(_isEditing ? Icons.save : Icons.edit),
-              color: Colors.red,
-            ),
-          ],
+        iconTheme: const IconThemeData(color: Colors.red),
+        title: const Text(
+          'Profile',
+          style: TextStyle(color: Colors.white),
         ),
-        body: StreamBuilder<DocumentSnapshot>(
-          stream: FirebaseFirestore.instance
-              .collection('users')
-              .doc(useremail!)
-              .snapshots(),
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              final userData = snapshot.data!.data() as Map<String, dynamic>;
-              final TextEditingController _nameController =
-                  TextEditingController(text: '${userData['Name']}');
-              final TextEditingController _emailController =
-                  TextEditingController(text: userData['Email']);
-              final TextEditingController _heightController =
-                  TextEditingController(text: userData['Height']);
-              final TextEditingController _weightController =
-                  TextEditingController(text: userData['Weight']);
-
-              return Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Center(
-                      child: GestureDetector(
-                        onTap: () {
-                          // change prof pic
-                        },
-                        child: const CircleAvatar(
-                          radius: 50,
-                          backgroundImage: NetworkImage(
-                              'https://cfb.rabbitloader.xyz/i0riln7w/rls.t-nw-a28/wp-content/uploads/2023/02/zyzz.webp'),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 16.0),
-                    TextField(
-                      controller: _nameController,
-                      enabled: _isEditing,
-                      style: const TextStyle(color: Colors.white),
-                      decoration: const InputDecoration(
-                        labelText: 'Name',
-                        labelStyle: TextStyle(color: Colors.white),
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.white),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 16.0),
-                    TextField(
-                      controller: _emailController,
-                      enabled: _isEditing,
-                      style: const TextStyle(color: Colors.white),
-                      decoration: const InputDecoration(
-                        labelText: 'Email',
-                        labelStyle: TextStyle(color: Colors.white),
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.white),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 16.0),
-                    TextField(
-                      controller: _heightController,
-                      enabled: _isEditing,
-                      style: const TextStyle(color: Colors.white),
-                      decoration: const InputDecoration(
-                        labelText: 'Height',
-                        labelStyle: TextStyle(color: Colors.white),
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.white),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 16.0),
-                    TextField(
-                      controller: _weightController,
-                      enabled: _isEditing,
-                      style: const TextStyle(color: Colors.white),
-                      decoration: const InputDecoration(
-                        labelText: 'Weight',
-                        labelStyle: TextStyle(color: Colors.white),
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.white),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 30.0),
-                    Center(
-                      child: ElevatedButton(
-                        onPressed: () {
-                          if (_isEditing) {
-                            updateData(
-                              _nameController.text.trim(),
-                              _emailController.text.trim(),
-                              _heightController.text.trim(),
-                              _weightController.text.trim(),
-                            );
-                          }
-                          setState(() {
-                            _isEditing = !_isEditing;
-                          });
-                        },
-                        style: ElevatedButton.styleFrom(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 60, vertical: 16),
-                          foregroundColor: _isEditing ? Colors.red : Colors.red,
-                          backgroundColor:
-                              _isEditing ? Colors.transparent : Colors.red,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8.0),
-                            side: BorderSide(
-                              color: _isEditing ? Colors.red : Colors.grey,
-                            ),
-                          ),
-                        ),
-                        child: Text(
-                          _isEditing ? 'Done Editing' : 'Edit Profile',
-                          style: TextStyle(
-                            color: _isEditing ? Colors.red : Colors.white,
-                          ),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 10.0,
-                    ),
-                    Center(
-                      child: ElevatedButton(
-                        onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const ForgotPWPage()));
-                        },
-                        style: ElevatedButton.styleFrom(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 45, vertical: 16),
-                          foregroundColor: Colors.red,
-                          backgroundColor: Colors.red,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8.0),
-                            side: const BorderSide(
-                              color: Colors.grey,
-                            ),
-                          ),
-                        ),
-                        child: const Text(
-                          'Reset Password',
-                          style: TextStyle(
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
+        actions: [
+          IconButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => EditProfilePage(),
                 ),
               );
-            } else if (snapshot.hasError) {
-              return Text(snapshot.error.toString());
-            } else {
-              return const CircularProgressIndicator();
-            }
-          },
-        ));
-  }
-
-  Future<void> updateData(
-      String name, String email, String height, String weight) async {
-    await FirebaseFirestore.instance.collection('users').doc(useremail).update({
-      'Name': name,
-      'Email': email,
-      'Height': height,
-      'Weight': weight,
-    });
+            },
+            icon: const Icon(Icons.edit),
+            color: Colors.red,
+          ),
+        ],
+      ),
+      body: StreamBuilder<DocumentSnapshot>(
+        stream: FirebaseFirestore.instance
+            .collection('users')
+            .doc(useremail!)
+            .snapshots(),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            final userData = snapshot.data!.data() as Map<String, dynamic>;
+            return Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Center(
+                    child: GestureDetector(
+                      onTap: () {
+                        _showSelectPhotoOptions(context);
+                      },
+                      child: Center(
+                        child: Container(
+                            height: 150.0,
+                            width: 150.0,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Colors.grey.shade200,
+                            ),
+                            child: Center(
+                              child: _image == null
+                                  ? const Text(
+                                      'No image selected',
+                                      style: TextStyle(fontSize: 16),
+                                    )
+                                  : CircleAvatar(
+                                      backgroundImage: FileImage(_image!),
+                                      radius: 200.0,
+                                    ),
+                            )),
+                      ),
+                    ),
+                  ),
+                  Center(
+                    child: ProfileInfo(
+                      label: '',
+                      value: userData['Name'],
+                    ),
+                  ),
+                  Center(
+                    child: ProfileInfo(
+                      label: '',
+                      value: userData['Email'],
+                    ),
+                  ),
+                  const SizedBox(height: 16.0),
+                  Center(
+                    child: Row(
+                      children: [
+                        const SizedBox(height: 16.0, width: 50.0,),
+                        ProfileInfo(
+                          label: 'Height (cm)',
+                          value: userData['Height'],
+                        ),
+                        const SizedBox(
+                          height: 16.0,
+                          width: 20.0,
+                        ),
+                        ProfileInfo(
+                          label: 'Weight (kg)',
+                          value: userData['Weight'],
+                        ),
+                        const SizedBox(
+                          height: 16.0,
+                          width: 20.0,
+                        ),
+                        ProfileInfo(
+                          label: 'BMI',
+                          value: (double.parse(userData['Weight']) /
+                                  (double.parse(userData['Height'])/100)* (double.parse(userData['Height'])/100))
+                              .toStringAsFixed(1),
+                        )
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 30.0),
+                  Center(
+                    child: ElevatedButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const ResetPWPage(),
+                          ),
+                        );
+                      },
+                      style: ElevatedButton.styleFrom(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 45, vertical: 16),
+                        foregroundColor: Colors.red,
+                        backgroundColor: Colors.red,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8.0),
+                          side: const BorderSide(
+                            color: Colors.grey,
+                          ),
+                        ),
+                      ),
+                      child: const Text(
+                        'Reset Password',
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            );
+          } else if (snapshot.hasError) {
+            return Text(snapshot.error.toString());
+          } else {
+            return const CircularProgressIndicator();
+          }
+        },
+      ),
+    );
   }
 }

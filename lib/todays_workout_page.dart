@@ -23,6 +23,7 @@ class TodaysWorkout extends StatelessWidget {
           'Today\'s Workout',
           style: TextStyle(color: Colors.white),
         ),
+        backgroundColor: Colors.red,
         automaticallyImplyLeading: false,
         leading: IconButton(
           onPressed: () {
@@ -44,20 +45,33 @@ class TodaysWorkout extends StatelessWidget {
             if (listWorkouts.isEmpty) {
               return const Text('No Workouts Planned!');
             } else {
-              return ListView(
-                children: listWorkouts.map((sWorkout) {
-                  return GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => SavedDetailedWorkout(workout: sWorkout),
-                        ),
-                      );
-                    },
-                    child: eachWorkout(sWorkout),
-                  );
-                }).toList(),
+              return ListView.builder(
+                itemCount: listWorkouts.length + 1,
+                itemBuilder: (context, index) {
+                  if (index == 0) {
+                    return const Padding(
+                      padding: EdgeInsets.all(20.0),
+                      child: Text(
+                        'Stay on track with your fitness goals! \nUnsure how to perform the exercise? Click on the workout for more information.',
+                        style: TextStyle(color: Colors.grey, fontSize: 16.0),
+                      ),
+                    );
+                  } else {
+                    final sWorkout = listWorkouts[index - 1];
+                    return GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                SavedDetailedWorkout(workout: sWorkout),
+                          ),
+                        );
+                      },
+                      child: eachWorkout(sWorkout),
+                    );
+                  }
+                },
               );
             }
           } else {
@@ -101,7 +115,7 @@ class TodaysWorkout extends StatelessWidget {
             borderRadius: BorderRadius.circular(20.0),
             side: const BorderSide(color: Colors.red, width: 2),
           ),
-          tileColor: Colors.grey.shade800,
+          tileColor: Colors.grey[900],
         ),
       );
 }

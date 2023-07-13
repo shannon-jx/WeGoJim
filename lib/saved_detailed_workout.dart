@@ -19,7 +19,7 @@ class _SavedDetailedWorkoutState extends State<SavedDetailedWorkout> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.black,
       appBar: AppBar(
         title: Text(widget.workout.name.toUpperCase()),
       ),
@@ -32,6 +32,7 @@ class _SavedDetailedWorkoutState extends State<SavedDetailedWorkout> {
                Icon(
                 Icons.fitness_center,
                 size: 40,
+                color: Colors.white,
               ),
       
               SizedBox(height: 15.0,),
@@ -40,7 +41,8 @@ class _SavedDetailedWorkoutState extends State<SavedDetailedWorkout> {
                 widget.workout.name.toUpperCase(),
                 style: TextStyle(
                   fontSize: 25.0,
-                  fontWeight: FontWeight.bold
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white
                 ),
               ), 
       
@@ -50,6 +52,7 @@ class _SavedDetailedWorkoutState extends State<SavedDetailedWorkout> {
                 'Difficulty: ${widget.workout.difficulty.toUpperCase()}\nEquipment: ${widget.workout.equipment.toUpperCase()}\nBody Part: ${widget.workout.bodyPart.toUpperCase()}\nTarget: ${widget.workout.target.toUpperCase()}\nInstructions: \n${widget.workout.instructions.toUpperCase()}',
                 style: TextStyle(
                   fontSize: 18.0,
+                  color: Colors.white
                 ),
               ), 
       

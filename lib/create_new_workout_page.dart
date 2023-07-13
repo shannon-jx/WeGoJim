@@ -15,15 +15,16 @@ class _CreateNewWorkoutState extends State<CreateNewWorkout> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey.shade900,
+      backgroundColor: Colors.black,
       appBar: AppBar(
-        title: const Text(''),
+        title: const Text('Muscle Group'),
+        backgroundColor: Colors.red,
       ),
       body: const SingleChildScrollView(
         child: Column(
           children: [
             
-            SizedBox(height: 50.0),
+            SizedBox(height: 30.0),
       
             Text(
               "UPPER BODY",
