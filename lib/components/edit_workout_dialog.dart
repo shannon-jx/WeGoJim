@@ -8,7 +8,6 @@ import 'package:wegojim/components/my_button.dart';
 import 'package:wegojim/components/saved_workout.dart';
 
 // ignore: must_be_immutable
-
 class EditWorkoutDialog extends StatefulWidget {
   final SavedWorkout sWorkout;
   DateTime setDate;

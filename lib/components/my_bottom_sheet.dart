@@ -34,7 +34,7 @@ class _MyBottomSheetState extends State<MyBottomSheet> {
       ),
       child: Column(
         children: [
-          const SizedBox(height: 40.0),
+          const SizedBox(height: 20.0),
 
           const Text(
             'Add this Workout',
@@ -87,12 +87,11 @@ class _MyBottomSheetState extends State<MyBottomSheet> {
                     ],
                   ),
 
-                  const SizedBox(height: 15.0,),
+                  const SizedBox(height: 10.0,),
 
                   Row(
                     children: [
                       const Text('Sets: ', style: TextStyle(fontSize: 20.0)),
-
                       Expanded(
                         child: Column(
                           children: [
@@ -115,7 +114,7 @@ class _MyBottomSheetState extends State<MyBottomSheet> {
                     ],
                   ),
 
-                  const SizedBox(height: 15.0,),
+                  const SizedBox(height: 10.0,),
 
                   const Align(
                       alignment: Alignment.centerLeft,
@@ -126,7 +125,7 @@ class _MyBottomSheetState extends State<MyBottomSheet> {
                     padding: const EdgeInsets.only(right: 40.0),
                     child: Container(
                       width: 450.0,
-                      height: 100.0,
+                      height: 80.0,
                       child: RotatedBox(
                         quarterTurns: -1,
                         child: Center(
@@ -142,22 +141,22 @@ class _MyBottomSheetState extends State<MyBottomSheet> {
                               });
                             },
                             children: List.generate(
-                              31,
+                              30,
                               (index) => RotatedBox(
                                 quarterTurns: 1,
                                 child: AnimatedContainer(
                                     duration: const Duration(milliseconds: 400),
-                                    width: index == selectedIndex ? 60 : 50,
-                                    height: index == selectedIndex ? 60 : 50,
+                                    width: index + 1 == selectedIndex ? 60 : 50,
+                                    height: index + 1 == selectedIndex ? 60 : 50,
                                     alignment: Alignment.center,
                                     decoration: BoxDecoration(
-                                      color: index == selectedIndex
+                                      color: index + 1 == selectedIndex
                                           ? Colors.red
                                           : Colors.grey.shade300,
                                       shape: BoxShape.circle,
                                     ),
                                     child: Text(
-                                      '$index',
+                                      '${index + 1}',
                                       style: const TextStyle(
                                           fontSize: 20.0,
                                           fontWeight: FontWeight.bold),

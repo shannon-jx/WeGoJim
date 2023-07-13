@@ -14,7 +14,6 @@ class WorkoutTile extends StatefulWidget {
 }
 
 class _WorkoutTileState extends State<WorkoutTile> {
-
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
