@@ -45,7 +45,7 @@ class _RootPageState extends State<RootPage> {
   final List<Widget> pages = [
     const HomePage(),
     const WorkoutCalendarPage(),
-    const ProfilePage(),
+    ProfilePage(),
   ];
 
   void signUserOut() {

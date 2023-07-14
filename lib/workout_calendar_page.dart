@@ -33,84 +33,86 @@ class _WorkoutCalendarPageState extends State<WorkoutCalendarPage> {
   }
 
   Widget content() {
-    return Column(
-      children: [
-        // ignore: avoid_unnecessary_containers
-        Container(
-          child: TableCalendar(
-              locale: "en_US",
-              headerStyle: const HeaderStyle(
-                  titleCentered: true,
-                  formatButtonVisible: false,
-                  titleTextStyle: TextStyle(
-                      color: Colors.white,
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold)),
-                      
-              availableGestures: AvailableGestures.all,
-              selectedDayPredicate: (day) => isSameDay(day, today),
-              focusedDay: today,
-              firstDay: DateTime.utc(2020, 1, 1),
-              lastDay: DateTime.utc(2050, 12, 31),
-              onDaySelected: _onDaySelected,
-
-              calendarStyle: const CalendarStyle(
-                selectedDecoration: BoxDecoration(
-                  color: Color.fromARGB(
-                      255, 234, 122, 114), 
-                  shape: BoxShape.circle,
-                ),
-                todayDecoration: BoxDecoration(
-                  color: Colors.red,
-                  shape: BoxShape.circle,
-                ),
-                selectedTextStyle: TextStyle(
-                  color: Colors.white,
-                  fontSize: 15,
-                ),
-                todayTextStyle: TextStyle(
-                  color: Colors.white,
-                  fontSize: 18
-                ),
-                weekendTextStyle:
-                    TextStyle(color: Color.fromARGB(255, 234, 122, 114), fontWeight: FontWeight.bold, fontSize: 15),
-                outsideDaysVisible: false,
-                defaultDecoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                ),
-                defaultTextStyle: TextStyle(
-                  color: Colors.white,
-                  fontSize: 15
-                ),
-              )),
-        ),
-
-        const SizedBox(
-          height: 20.0,
-        ),
-
-        Text(
-          'Planned Workouts for ${today.day}/${today.month}/${today.year}:',
-          style: const TextStyle(color: Colors.white, fontSize: 20.0),
-        ),
-
-        Expanded(
-          child: StreamBuilder<List<SavedWorkout>>(
-              stream: readData(),
-              builder: (context, snapshot) {
-                if (snapshot.hasError) {
-                  return Text(snapshot.error.toString());
-                } else if (snapshot.hasData) {
-                  final listWorkouts = snapshot.data!;
-                  return ListView(
-                    children: listWorkouts.map(eachWorkout).toList(),
-                  );
-                } else {
-                  return const Center(child: CircularProgressIndicator());
-                }
-              }),
-        ),
-      ],
+    return Container(
+      child: Column(
+        children: [
+          // ignore: avoid_unnecessary_containers
+          Container(
+            child: TableCalendar(
+                locale: "en_US",
+                headerStyle: const HeaderStyle(
+                    titleCentered: true,
+                    formatButtonVisible: false,
+                    titleTextStyle: TextStyle(
+                        color: Colors.white,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold)),
+                        
+                availableGestures: AvailableGestures.all,
+                selectedDayPredicate: (day) => isSameDay(day, today),
+                focusedDay: today,
+                firstDay: DateTime.utc(2020, 1, 1),
+                lastDay: DateTime.utc(2050, 12, 31),
+                onDaySelected: _onDaySelected,
+    
+                calendarStyle: const CalendarStyle(
+                  selectedDecoration: BoxDecoration(
+                    color: Color.fromARGB(
+                        255, 234, 122, 114), 
+                    shape: BoxShape.circle,
+                  ),
+                  todayDecoration: BoxDecoration(
+                    color: Colors.red,
+                    shape: BoxShape.circle,
+                  ),
+                  selectedTextStyle: TextStyle(
+                    color: Colors.white,
+                    fontSize: 15,
+                  ),
+                  todayTextStyle: TextStyle(
+                    color: Colors.white,
+                    fontSize: 18
+                  ),
+                  weekendTextStyle:
+                      TextStyle(color: Color.fromARGB(255, 234, 122, 114), fontWeight: FontWeight.bold, fontSize: 15),
+                  outsideDaysVisible: false,
+                  defaultDecoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                  ),
+                  defaultTextStyle: TextStyle(
+                    color: Colors.white,
+                    fontSize: 15
+                  ),
+                )),
+          ),
+    
+          const SizedBox(
+            height: 20.0,
+          ),
+    
+          Text(
+            'Planned Workouts for ${today.day}/${today.month}/${today.year}:',
+            style: const TextStyle(color: Colors.white, fontSize: 20.0),
+          ),
+    
+          Expanded(
+            child: StreamBuilder<List<SavedWorkout>>(
+                stream: readData(),
+                builder: (context, snapshot) {
+                  if (snapshot.hasError) {
+                    return Text(snapshot.error.toString());
+                  } else if (snapshot.hasData) {
+                    final listWorkouts = snapshot.data!;
+                    return ListView(
+                      children: listWorkouts.map(eachWorkout).toList(),
+                    );
+                  } else {
+                    return const Center(child: CircularProgressIndicator());
+                  }
+                }),
+          ),
+        ],
+      ),
     );
   }
 
@@ -157,8 +159,9 @@ class _WorkoutCalendarPageState extends State<WorkoutCalendarPage> {
         ),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20.0),
+          side: const BorderSide(color: Colors.red, width: 2),
         ),
-        tileColor: Colors.grey.shade800,
+        tileColor: Colors.grey.shade900,
         trailing: 
             Row(
               mainAxisSize: MainAxisSize.min,
@@ -176,8 +179,7 @@ class _WorkoutCalendarPageState extends State<WorkoutCalendarPage> {
                   iconSize: 30,
                   icon: const Icon(Icons.delete),
                   onPressed: () {
-                    final docWorkout = FirebaseFirestore.instance.collection(useremail!).doc(sWorkout.id);
-                    docWorkout.delete();
+                    _showDeleteConfirmationDialog(sWorkout);
                   },
                 ),
               ],
@@ -185,6 +187,36 @@ class _WorkoutCalendarPageState extends State<WorkoutCalendarPage> {
       ),
     ),
   );
+
+  Future<void> _showDeleteConfirmationDialog(SavedWorkout sWorkout) async {
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Delete Workout'),
+          content: const Text(
+              'Are you sure you want to delete this workout?'),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('Cancel'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child: const Text('Delete'),
+              onPressed: () {
+                Navigator.of(context).pop();
+                final docWorkout =
+                    FirebaseFirestore.instance.collection(useremail!).doc(sWorkout.id);
+                docWorkout.delete();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
 
   Future<void> editWorkout(SavedWorkout sWorkout) async {
 
