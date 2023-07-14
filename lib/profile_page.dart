@@ -34,7 +34,6 @@ class _ProfilePageState extends State<ProfilePage> {
       img = await _cropImage(imageFile: img);
       setState(() {
         _image = img;
-        _saveImageLocally(img);
         Navigator.of(context).pop();
       });
     } on PlatformException catch (e) {
@@ -42,13 +41,6 @@ class _ProfilePageState extends State<ProfilePage> {
       Navigator.of(context).pop();
     }
   }
-
-  Future<void> _saveImageLocally(File? image) async {
-  final appDir = await getApplicationDocumentsDirectory();
-  final fileName = 'profile_image.jpg';
-  final localPath = '${appDir.path}/$fileName';
-  await image?.copy(localPath);
-}
 
   Future<File?> _cropImage({required File imageFile}) async {
     CroppedFile? croppedImage =
@@ -85,6 +77,8 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.black,
+      appBar: AppBar(
         backgroundColor: Colors.black,
         iconTheme: const IconThemeData(color: Colors.red),
         title: const Text(
@@ -182,7 +176,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         ProfileInfo(
                           label: 'BMI',
                           value: (double.parse(userData['Weight']) /
-                                  (double.parse(userData['Height'])/100)* (double.parse(userData['Height'])/100))
+                                  ((double.parse(userData['Height'])/100)* (double.parse(userData['Height'])/100)))
                               .toStringAsFixed(1),
                         )
                       ],
