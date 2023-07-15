@@ -181,7 +181,7 @@ class HomePage extends StatelessWidget {
                     Navigator.of(context).push(
                       MaterialPageRoute(
                         builder: (BuildContext context) {
-                          return const RecommendedWorkoutPage();
+                          return RecommendedWorkoutPage();
                         },
                       ),
                     );
