@@ -191,6 +191,7 @@ class _WorkoutCalendarPageState extends State<WorkoutCalendarPage> {
   Future<void> _showDeleteConfirmationDialog(SavedWorkout sWorkout) async {
     return showDialog<void>(
       context: context,
+
       builder: (BuildContext context) {
         return AlertDialog(
           title: const Text('Delete Workout'),

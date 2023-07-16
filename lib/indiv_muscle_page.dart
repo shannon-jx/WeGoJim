@@ -28,7 +28,7 @@ class _IndivMusclePageState extends State<IndivMusclePage> {
     final response = await http.get(
       Uri.parse(link),
       headers: {
-        'X-RapidAPI-Key': '60f6a7afb6msh6c3f568740f6e4cp188d55jsn3b283e518391',
+        'X-RapidAPI-Key': 'e822ba5486mshac4232c2fc82990p103b41jsnde3a0fda5d80',
         'X-RapidAPI-Host': 'exercisedb.p.rapidapi.com'
       }
     );

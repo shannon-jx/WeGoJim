@@ -107,6 +107,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                   });
                 },
                 style: ElevatedButton.styleFrom(
+                  fixedSize: Size(300, 60),
                   padding:
                       const EdgeInsets.symmetric(horizontal: 45, vertical: 16),
                   foregroundColor: Colors.red,
@@ -118,10 +119,11 @@ class _EditProfilePageState extends State<EditProfilePage> {
                     ),
                   ),
                 ),
-                child: const Text(
-                  'Save Edits',
+                child: Text(
+                  _isEditing ? 'Save Edits' : 'Edit',
                   style: TextStyle(
                     color: Colors.white,
+                    fontSize: 16.0,
                   ),
                 ),
               ),
