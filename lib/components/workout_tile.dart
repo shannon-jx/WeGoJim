@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:wegojim/detailed_workout.dart';
 import 'package:wegojim/components/my_bottom_sheet.dart';
