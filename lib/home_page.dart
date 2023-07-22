@@ -225,15 +225,6 @@ class HomePage extends StatelessWidget {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          debugPrint('Floating Action Button');
-        },
-        child: const Icon(
-          Icons.messenger_rounded,
-          color: Colors.red,
-        ),
-      ),
     );
   }
 }
