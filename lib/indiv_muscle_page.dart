@@ -9,11 +9,13 @@ import 'package:flutterflow_paginate_firestore/paginate_firestore.dart';
 import 'package:wegojim/components/workout.dart';
 import 'package:wegojim/components/workout_tile.dart';
 import 'package:http/http.dart' as http;
+import 'package:wegojim/components/paginated_firestore_list.dart';
 
 class IndivMusclePage extends StatefulWidget {
   final String title;
+  final FirebaseFirestore? firestore;
 
-  const IndivMusclePage({super.key, required this.title});
+  const IndivMusclePage({super.key, required this.title, this.firestore});
 
   @override
   State<IndivMusclePage> createState() => _IndivMusclePageState();
@@ -33,6 +35,13 @@ class _IndivMusclePageState extends State<IndivMusclePage> {
     'Lever',
     'Smith',
   ];
+  late FirebaseFirestore _firestore;
+
+  @override
+  void initState() {
+    super.initState();
+    _firestore = widget.firestore ?? FirebaseFirestore.instance;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -113,7 +122,7 @@ class _IndivMusclePageState extends State<IndivMusclePage> {
             ),
           ),
 
-          Expanded(child: _PaginatedFirestoreList(title: widget.title)),
+          Expanded(child: PaginatedFirestoreList(title: widget.title, firestore: _firestore,)),
         ],
       ),
     );
@@ -121,58 +130,8 @@ class _IndivMusclePageState extends State<IndivMusclePage> {
 
   void _filter(String keyword, String equipment) {
     setState(() {
-      _PaginatedFirestoreList.keywords = keyword.toLowerCase();
-      _PaginatedFirestoreList.selectedEquipment = equipment.toLowerCase();
+      PaginatedFirestoreList.keywords = keyword.toLowerCase();
+      PaginatedFirestoreList.selectedEquipment = equipment.toLowerCase();
     });
-  }
-}
-
-class _PaginatedFirestoreList extends StatelessWidget {
-  final String title;
-  static String keywords = '';
-  static String selectedEquipment = '';
-
-  const _PaginatedFirestoreList({super.key, required this.title});
-
-  @override
-  Widget build(BuildContext context) {
-    return PaginateFirestore(
-      query: FirebaseFirestore.instance.collection('data-${title.toLowerCase()}'),
-      itemBuilderType: PaginateBuilderType.listView,
-      itemsPerPage: 5,
-      initialLoader: const Center(
-        child: CircularProgressIndicator.adaptive(),
-      ),
-      onEmpty: const Center(
-        child: Text('Empty data!'),
-      ),
-      onError: (e) => const Center(
-        child: CircularProgressIndicator(),
-      ),
-      bottomLoader: const Center(
-        child: CircularProgressIndicator(),
-      ),
-      itemBuilder: (context, snapshot, index) {
-        final Map<String, dynamic> json =
-            snapshot[index].data() as Map<String, dynamic>;
-
-        final workout = Workout(
-            name: json['Name'],
-            difficulty: json['Difficulty'],
-            equipment: json['Equipment'],
-            image: json['Image'],
-            instructions: json['Instructions'],
-            bodyPart: json['Body Part'],
-            target: json['Target']);
-
-        if (workout.name.toLowerCase().contains(keywords.toLowerCase()) 
-          && (selectedEquipment.isEmpty 
-            || workout.equipment.toLowerCase().contains(selectedEquipment))) {
-          return WorkoutTile(workout: workout);
-        } else {
-          return Container();
-        }
-      },
-    );
   }
 }
