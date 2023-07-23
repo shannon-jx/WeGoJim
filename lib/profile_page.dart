@@ -14,7 +14,6 @@ import 'components/select_pfp_sheet.dart';
 import 'edit_profile_page.dart';
 import 'package:path_provider/path_provider.dart';
 
-
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
 
@@ -156,7 +155,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   Center(
                     child: Row(
                       children: [
-                        const SizedBox(height: 16.0, width: 50.0,),
+                        const SizedBox(height: 16.0, width: 50.0),
                         ProfileInfo(
                           label: 'Height (cm)',
                           value: userData['Height'],
@@ -175,10 +174,9 @@ class _ProfilePageState extends State<ProfilePage> {
                         ),
                         ProfileInfo(
                           label: 'BMI',
-                          value: (double.parse(userData['Weight']) /
-                                  ((double.parse(userData['Height'])/100)* (double.parse(userData['Height'])/100)))
-                              .toStringAsFixed(1),
-                        )
+                          value: _calculateBMI(
+                              userData['Weight'], userData['Height']),
+                        ),
                       ],
                     ),
                   ),
@@ -225,4 +223,20 @@ class _ProfilePageState extends State<ProfilePage> {
       ),
     );
   }
+}
+
+String _calculateBMI(String? weight, String? height) {
+  if (weight == null || height == null) {
+    return 'N/A'; // N/A if weight or height is missing
+  }
+
+  double weightValue = double.tryParse(weight) ?? 0.0;
+  double heightValue = double.tryParse(height) ?? 0.0;
+
+  if (weightValue <= 0 || heightValue <= 0) {
+    return 'N/A'; // N/A if weight or height is not a positive number
+  }
+
+  double bmi = weightValue / ((heightValue / 100) * (heightValue / 100));
+  return bmi.toStringAsFixed(1);
 }
