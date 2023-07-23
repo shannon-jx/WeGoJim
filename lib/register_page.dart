@@ -7,7 +7,10 @@ import 'package:wegojim/components/my_textfield.dart';
 //import 'package:wegojim/login_page.dart';
 
 class RegisterPage extends StatefulWidget {
-  const RegisterPage({super.key});
+  final FirebaseAuth? auth;
+  final FirebaseFirestore? firestore;
+
+  RegisterPage({super.key, this.auth, this.firestore});
 
   @override
   State<RegisterPage> createState() => _RegisterPageState();
@@ -20,21 +23,17 @@ class _RegisterPageState extends State<RegisterPage> {
   final passwordController = TextEditingController();
   final confirmPasswordController = TextEditingController();
 
-  void signUserUp() async {
-    String firstname = firstnameController.text.trim();
-    String lastname = lastnameController.text.trim();
-    String email = emailController.text.trim();
-    String password = passwordController.text.trim();
-    String confirmPassword = confirmPasswordController.text.trim();
+  Future<String> signUserUp(String firstname, String lastname, String email, String password, String confirmPassword) async {
 
     if (firstname.isEmpty || lastname.isEmpty ||  email.isEmpty || password.isEmpty || confirmPassword.isEmpty) {
       showErrorMessage("Please fill in all fields.");
-      return;
+      return "Please fill in all fields.";
     }
 
     try {
       if (password == confirmPassword) {
-        await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        FirebaseAuth auth = widget.auth ?? FirebaseAuth.instance;
+        await auth.createUserWithEmailAndPassword(
           email: email,
           password: password,
         );
@@ -43,16 +42,20 @@ class _RegisterPageState extends State<RegisterPage> {
 
         // ignore: use_build_context_synchronously
         Navigator.of(context).push(MaterialPageRoute(builder: (context) => const AuthPage()));
+        return "Success";
       } else {
         showErrorMessage("Passwords don't match.");
+        return "Passwords don't match.";
       }
     } on FirebaseAuthException catch (e) {
       showErrorMessage(e.code);
+      return e.code.toString();
     }
   }
 
   Future getDetails(String firstname, String lastname, String email) async {
-    await FirebaseFirestore.instance.collection('users').doc(email).set({
+    FirebaseFirestore firestore = widget.firestore ?? FirebaseFirestore.instance;
+    await firestore.collection('users').doc(email).set({
       'Name': '$firstname $lastname',
       'Email': email,
       'Height': '-',
@@ -165,7 +168,13 @@ class _RegisterPageState extends State<RegisterPage> {
                   const SizedBox(height: 20),
       
                   MyButton(
-                    onTap: signUserUp,
+                    onTap: () {signUserUp(
+                      firstnameController.text.trim(),
+                      lastnameController.text.trim(),
+                      emailController.text.trim(),
+                      passwordController.text.trim(),
+                      confirmPasswordController.text.trim()
+                    );},
                     desc: 'Sign Up',
                   ),
       
