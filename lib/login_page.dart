@@ -24,13 +24,23 @@ class _LoginPageState extends State<LoginPage> {
   final passwordController = TextEditingController();
 
   // sign user in method
-  void signUserIn() async {
+  Future<String> signUserIn() async {
     String email = emailController.text.trim();
     String password = passwordController.text.trim();
 
     if (email.isEmpty || password.isEmpty) {
       showEmptyFieldsMessage("Please fill in all fields.");
-      return;
+      return "Please fill in all fields.";
+    }
+
+    if (!email.contains('.com') || !email.contains('@')) {
+      wrongEmailMessage();
+      return "Invalid Email"; 
+    }
+
+    if (password.length < 6) {
+      wrongPasswordMessage();
+      return "Incorrect Password";
     }
 
     try {
@@ -38,13 +48,17 @@ class _LoginPageState extends State<LoginPage> {
         email: email,
         password: password,
       );
+      return "Success";
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         wrongEmailMessage();
+        return 'user-not-found';
       } else if (e.code == 'wrong-password') {
         wrongPasswordMessage();
+        return 'wrong-password';
       }
     }
+    return "Failure";
   }
 
   void showEmptyFieldsMessage(String message) {

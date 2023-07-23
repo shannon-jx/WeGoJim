@@ -28,6 +28,16 @@ class _RegisterPageState extends State<RegisterPage> {
     if (firstname.isEmpty || lastname.isEmpty ||  email.isEmpty || password.isEmpty || confirmPassword.isEmpty) {
       showErrorMessage("Please fill in all fields.");
       return "Please fill in all fields.";
+    } 
+    
+    if (password.length < 6) {
+      showErrorMessage("Weak Password");
+      return "Weak Password";
+    }
+
+    if (!email.contains('.com') || !email.contains('@')) {
+      showErrorMessage("Invalid Email");
+      return "Invalid Email"; 
     }
 
     try {
