@@ -228,7 +228,7 @@ void main() {
     expect(find.byType(MockBottomSheet), findsOneWidget);
     expect(find.byType(TextButton), findsOneWidget);
     expect(find.byType(Slider), findsOneWidget);
-    expect(find.byType(RotatedBox), findsAtLeastNWidgets(1));
+    expect(find.byType(ListWheelScrollView), findsOneWidget);
     expect(find.byType(MyButton), findsOneWidget);
   });
 
@@ -246,6 +246,10 @@ void main() {
     await tester.pumpAndSettle();
 
     await tester.tap(find.text('7'));
+
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('OK'));
 
     await tester.pumpAndSettle();
 
@@ -269,9 +273,20 @@ void main() {
   });
 
   testWidgets('Test if the FixedExtentScrollController can successfully select the number of repetitions.', (WidgetTester tester) async {
-    await tester.pumpWidget(MaterialApp(home: mockBottomSheet));
-    
-    expect(find.text('3'), findsOneWidget);
 
+    await tester.pumpWidget(MaterialApp(home: mockBottomSheet));
+
+    // Ensure that the initial selected value is '1'
+    expect(find.text('1'), findsAtLeastNWidgets(1));
+
+    // Find the ListWheelScrollView widget
+    final scrollFinder = find.byType(ListWheelScrollView);
+
+    // Drag the scroll upwards to select a different number of repetitions, e.g., '5'
+    await tester.drag(scrollFinder, const Offset(0.0, -250.0));
+    await tester.pumpAndSettle();
+
+    // Verify if the selected value is updated correctly to '5'
+    expect(find.text('5'), findsOneWidget);
   });
 }

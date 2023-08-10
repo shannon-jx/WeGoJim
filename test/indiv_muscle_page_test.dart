@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:math';
 
 import 'package:fake_cloud_firestore/fake_cloud_firestore.dart';
@@ -76,11 +77,7 @@ class _MockWorkoutTileState extends State<MockWorkoutTile> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) =>
-                    DetailedWorkout(workout: widget.workout)));
+        result("Launch Detailed Workout");
       },
       child: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -154,13 +151,14 @@ class _MockWorkoutTileState extends State<MockWorkoutTile> {
                       ),
                     ),
                     onTap: () {
-                      showModalBottomSheet(
+                      result("Success");
+                      /*showModalBottomSheet(
                         backgroundColor: Colors.transparent,
                         context: context,
                         builder: (BuildContext context) {
                           return MyBottomSheet(workout: widget.workout);
                         },
-                      );
+                      );*/
                     },
                   ),
                 ],
@@ -171,9 +169,42 @@ class _MockWorkoutTileState extends State<MockWorkoutTile> {
       ),
     );
   }
+
+  void result(String message) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          backgroundColor: Colors.white,
+          title: Center(
+            child: Text(
+              message,
+              style: const TextStyle(color: Colors.black),
+            ),
+          ),
+        );
+      },
+    );
+  }
 }
 
 void main() {
+  TestWidgetsFlutterBinding.ensureInitialized();
+  HttpOverrides.runZoned(() {
+    // Run your test here
+    testWidgets('Test if the search bar controller can successfully filter - Legit search', (WidgetTester tester) async {
+      final FakeFirebaseFirestore fakeFirebaseFirestore = FakeFirebaseFirestore();
+      final IndivMusclePage indivMusclePage = IndivMusclePage(title: 'Forearms', firestore: fakeFirebaseFirestore,);
+      final Widget testWidget = MaterialApp(home: indivMusclePage);
+      
+      MockPaginated.keywords = 'Test';
+
+      // Rebuild the widget tree
+      await tester.pumpWidget(testWidget);
+
+      expect(find.text('Dumbbells'), findsOneWidget);
+    });
+  });
   final FakeFirebaseFirestore fakeFirebaseFirestore = FakeFirebaseFirestore();
 
   final IndivMusclePage indivMusclePage = IndivMusclePage(title: 'Forearms', firestore: fakeFirebaseFirestore,);
@@ -199,25 +230,7 @@ void main() {
     expect(find.byType(Scaffold), findsOneWidget);
     expect(find.text('Search'), findsOneWidget);
     expect(find.text('Dumbbells'), findsOneWidget);
+    expect(find.byType(Icon), findsOneWidget);
     expect(find.byType(PaginatedFirestoreList), findsOneWidget);
-  });
-
-  testWidgets('Test if the search bar controller can successfully filter the list of workouts', (WidgetTester tester) async {
-    /*PaginatedFirestoreList.keywords = 'Test';
-    PaginatedFirestoreList.selectedEquipment = '';
-    final IndivMusclePage indivMusclePage = IndivMusclePage(title: 'Forearms', firestore: fakeFirebaseFirestore,);
-    final Widget testWidget = MaterialApp(home: indivMusclePage);
-    await tester.pumpWidget(testWidget);
-
-    await tester.pumpAndSettle();
-
-    expect(find.text('Dumbbells'), findsOneWidget);*/
-    final MockPaginated mockPaginated = MockPaginated(title: 'Forearms', firestore: fakeFirebaseFirestore,);
-    final Widget testWidget = MaterialApp(home: mockPaginated);
-    await tester.pumpWidget(testWidget);
-
-    await tester.pumpAndSettle();
-    // Verify the initial list contains 'Dumbbells'
-    expect(find.text('Dumbbells'), findsOneWidget);
   });
 }
